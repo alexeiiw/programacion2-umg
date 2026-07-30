@@ -153,3 +153,8 @@ java Simulador
 Esta carpeta se usara para publicar codigo de tareas ya resueltas o ejemplos adicionales del curso.
 
 La idea es que los estudiantes puedan revisar soluciones, comparar enfoques y usarlas como apoyo para estudiar.
+
+Indice actual:
+
+- `TareasResueltas/Semana2/ConversorMaya.cpp`
+- `TareasResueltas/Semana2/ConversorMaya.cs`
