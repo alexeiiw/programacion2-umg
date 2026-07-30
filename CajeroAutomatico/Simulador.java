@@ -15,14 +15,28 @@ public class Simulador {
 
         CajeroAutomatico cajero = new CajeroAutomatico(banco);
 
+        System.out.println("Intento con PIN incorrecto: " + cajero.autenticar("TAR-001", "0000"));
+
         if (cajero.autenticar("TAR-001", "1234")) {
             System.out.println("Saldo inicial: " + cajero.consultarSaldo());
             System.out.println(cajero.retirar(200.0));
             System.out.println(cajero.depositar(150.0));
             System.out.println(cajero.transferir("CTA-002", 300.0));
+            System.out.println(cajero.retirar(10000.0));
+            mostrarHistorial(cuenta1);
             System.out.println("Saldo final: " + cajero.consultarSaldo());
         } else {
             System.out.println("No se pudo autenticar la tarjeta");
+        }
+    }
+
+    private static void mostrarHistorial(CuentaBancaria cuenta) {
+        System.out.println("Historial de la cuenta " + cuenta.getNumero() + ":");
+
+        for (Transaccion transaccion : cuenta.getHistorial()) {
+            System.out.println("- " + transaccion.getTipo()
+                    + " por " + transaccion.getMonto()
+                    + " el " + transaccion.getFecha());
         }
     }
 }

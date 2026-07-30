@@ -1,5 +1,7 @@
 # Programacion 2 UMG Portales
 
+Ultima actualizacion: 30 de julio de 2026
+
 Bienvenidos al repositorio de apoyo para el curso de Programacion 2 de la Universidad Mariano Galvez, sede Portales.
 
 El objetivo principal de este repositorio es practicar programacion orientada a objetos en Java usando BlueJ.
@@ -61,12 +63,43 @@ BlueJ muestra las clases como cajas dentro del proyecto.
 
 ## Como Usar El Repositorio
 
-1. Descargar o clonar el repositorio.
-2. Abrir cada carpeta de proyecto desde BlueJ.
-3. No subir archivos `.class`, porque son generados al compilar.
-4. No modificar archivos de otros proyectos sin indicacion del docente.
-5. Crear nuevas carpetas para nuevos ejercicios.
-6. Usar nombres claros para clases, metodos y variables.
+1. Instalar Git si aun no esta instalado.
+2. Abrir PowerShell o Git Bash.
+3. Ir a la carpeta donde se desea guardar el repositorio.
+4. Clonar el repositorio.
+5. Abrir cada carpeta de proyecto desde BlueJ.
+6. No subir archivos `.class`, porque son generados al compilar.
+7. No modificar archivos de otros proyectos sin indicacion del docente.
+8. Crear nuevas carpetas para nuevos ejercicios.
+9. Usar nombres claros para clases, metodos y variables.
+
+Comandos basicos:
+
+```powershell
+git clone https://github.com/alexeiiw/programacion2-umg.git
+cd programacion2-umg
+dir
+```
+
+Para actualizar el repositorio local con cambios nuevos:
+
+```powershell
+git pull
+```
+
+Para ver el estado de sus cambios:
+
+```powershell
+git status
+```
+
+Para probar un proyecto desde PowerShell:
+
+```powershell
+cd CajeroAutomatico
+javac *.java
+java Simulador
+```
 
 ## Recomendaciones Para Los Estudiantes
 
@@ -88,3 +121,9 @@ Este proyecto simula operaciones basicas de un cajero automatico:
 - Generacion de recibos.
 
 Tambien sirve como ejemplo de POO usando encapsulamiento, abstraccion, herencia y polimorfismo.
+
+Documentacion especifica:
+
+- `CajeroAutomatico/README.md`: guia completa del proyecto.
+- `CajeroAutomatico/README.txt`: resumen visible desde BlueJ.
+- `CajeroAutomatico/diagramas.md`: diagramas de clases, casos de uso, actividades con carriles, flujo y modelo entidad-relacion conceptual.
