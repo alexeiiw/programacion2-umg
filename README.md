@@ -31,6 +31,7 @@ El proyecto actual disponible es:
 ```text
 CajeroAutomatico/
 HolaMundoBlueJ/
+TareasResueltas/
 ```
 
 ## Como Usar BlueJ
@@ -146,3 +147,9 @@ cd HolaMundoBlueJ
 javac *.java
 java Simulador
 ```
+
+## Carpeta TareasResueltas
+
+Esta carpeta se usara para publicar codigo de tareas ya resueltas o ejemplos adicionales del curso.
+
+La idea es que los estudiantes puedan revisar soluciones, comparar enfoques y usarlas como apoyo para estudiar.
