@@ -30,6 +30,7 @@ El proyecto actual disponible es:
 
 ```text
 CajeroAutomatico/
+HolaMundoBlueJ/
 ```
 
 ## Como Usar BlueJ
@@ -127,3 +128,21 @@ Documentacion especifica:
 - `CajeroAutomatico/README.md`: guia completa del proyecto.
 - `CajeroAutomatico/README.txt`: resumen visible desde BlueJ.
 - `CajeroAutomatico/diagramas.md`: diagramas de clases, casos de uso, actividades con carriles, flujo y modelo entidad-relacion conceptual.
+
+## Proyecto HolaMundoBlueJ
+
+Este proyecto es un ejemplo inicial muy simple para abrir, compilar y ejecutar en BlueJ.
+
+Incluye:
+
+- `Animal`: clase base.
+- `Perro`: clase hija que hereda de `Animal`.
+- `Simulador`: crea un objeto `Perro` y muestra datos en consola.
+
+Para probarlo desde PowerShell:
+
+```powershell
+cd HolaMundoBlueJ
+javac *.java
+java Simulador
+```
