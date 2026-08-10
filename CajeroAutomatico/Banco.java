@@ -5,11 +5,13 @@ public class Banco {
     private final String nombre;
     private final Map<String, Tarjeta> tarjetas;
     private final Map<String, CuentaBancaria> cuentas;
+    private final Map<String, Factura> facturas;
 
     public Banco(String nombre) {
         this.nombre = nombre;
         this.tarjetas = new HashMap<String, Tarjeta>();
         this.cuentas = new HashMap<String, CuentaBancaria>();
+        this.facturas = new HashMap<String, Factura>();
     }
 
     public String getNombre() {
@@ -31,5 +33,14 @@ public class Banco {
 
     public CuentaBancaria buscarCuenta(String numeroCuenta) {
         return cuentas.get(numeroCuenta);
+    }
+
+    public void registrarFactura(Factura factura) {
+        facturas.put(factura.getLlave(), factura);
+    }
+
+    public Factura buscarFactura(String tipo, String identificador) {
+        String llave = tipo.toUpperCase() + ":" + identificador.toUpperCase();
+        return facturas.get(llave);
     }
 }

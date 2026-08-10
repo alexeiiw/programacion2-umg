@@ -6,11 +6,12 @@ El objetivo es que los estudiantes puedan revisar soluciones, comparar enfoques 
 
 ## Organizacion
 
-Las tareas se organizaran por semana.
+Las tareas se organizaran por semana o por tipo de material cuando corresponda.
 
 ```text
 TareasResueltas/
 Semana2/
+PreTest/
 ```
 
 ## Indice
@@ -19,6 +20,12 @@ Semana2/
 
 - `Semana2/ConversorMaya.cpp`: version en C++.
 - `Semana2/ConversorMaya.cs`: version en C#.
+
+### Pre Test
+
+- `PreTest/CajeroAutomatico/Simulador.java`: solucion del simulador del cajero automatico con pago de servicios.
+- `PreTest/ConversorBase20.cpp`: conversor base 10 a base 20 en C++.
+- `PreTest/ConversorBase20.cs`: conversor base 10 a base 20 en C#.
 
 ## Recomendaciones
 

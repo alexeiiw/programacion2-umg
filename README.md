@@ -1,6 +1,6 @@
 # Programacion 2 UMG Portales
 
-Ultima actualizacion: 30 de julio de 2026
+Ultima actualizacion: 10 de agosto de 2026
 
 Bienvenidos al repositorio de apoyo para el curso de Programacion 2 de la Universidad Mariano Galvez, sede Portales.
 
@@ -113,14 +113,25 @@ java Simulador
 
 ## Proyecto CajeroAutomatico
 
-Este proyecto simula operaciones basicas de un cajero automatico:
+Este proyecto simula operaciones de un cajero automatico:
 
 - Autenticacion con tarjeta y PIN.
 - Consulta de saldo.
 - Retiro.
 - Deposito.
 - Transferencia.
+- Pago de servicios.
+- Facturas con pago parcial o total.
 - Generacion de recibos.
+
+El pago de servicios permite trabajar con facturas de telefono y energia electrica.
+Telefono se identifica por numero de linea fija y energia electrica por numero de correlativo.
+El sistema valida que no se pague mas del saldo pendiente de una factura.
+
+Clases destacadas del modulo de servicios:
+
+- `Factura`: representa una factura con tipo, identificador, saldo pendiente y estado pagado/pendiente.
+- `PagoServicio`: transaccion que permite pagar parcial o totalmente una factura registrada.
 
 Tambien sirve como ejemplo de POO usando encapsulamiento, abstraccion, herencia y polimorfismo.
 
@@ -158,3 +169,6 @@ Indice actual:
 
 - `TareasResueltas/Semana2/ConversorMaya.cpp`
 - `TareasResueltas/Semana2/ConversorMaya.cs`
+- `TareasResueltas/PreTest/CajeroAutomatico/Simulador.java`
+- `TareasResueltas/PreTest/ConversorBase20.cpp`
+- `TareasResueltas/PreTest/ConversorBase20.cs`

@@ -21,6 +21,13 @@ public class Recibo {
             texto += "\nCuenta destino: " + transferencia.getCuentaDestino().getNumero();
         }
 
+        if (transaccion instanceof PagoServicio) {
+            PagoServicio pagoServicio = (PagoServicio) transaccion;
+            Factura factura = pagoServicio.getFactura();
+            texto += "\nServicio: " + factura.getTipo()
+                    + "\nIdentificador: " + factura.getIdentificador();
+        }
+
         return texto;
     }
 

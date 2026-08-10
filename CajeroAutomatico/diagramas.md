@@ -1,6 +1,7 @@
 # Diagramas Del Proyecto Cajero Automatico
 
-Estos diagramas documentan el analisis y diseno del proyecto. GitHub puede mostrar los diagramas Mermaid directamente desde este archivo.
+Estos diagramas documentan el analisis y diseno del proyecto.
+GitHub puede mostrar los diagramas Mermaid directamente desde este archivo.
 
 ## Diagrama De Clases
 
@@ -18,10 +19,11 @@ classDiagram
         -Cliente titular
         -double saldo
         -List~Transaccion~ historial
+        +getSaldo() double
         +depositar(double monto)
         +retirar(double monto) boolean
         +transferirA(CuentaBancaria destino, double monto) boolean
-        +registrarTransaccion(Transaccion transaccion)
+        +registrarTransaccion(Transaccion t)
     }
 
     class Tarjeta {
@@ -37,20 +39,25 @@ classDiagram
         -String nombre
         -Map tarjetas
         -Map cuentas
+        -Map facturas
         +registrarCuenta(CuentaBancaria cuenta)
         +registrarTarjeta(Tarjeta tarjeta)
+        +registrarFactura(Factura factura)
         +buscarTarjeta(String numeroTarjeta) Tarjeta
         +buscarCuenta(String numeroCuenta) CuentaBancaria
+        +buscarFactura(String tipo, String identificador) Factura
     }
 
     class CajeroAutomatico {
         -Banco banco
         -Tarjeta tarjetaActual
         +autenticar(String numeroTarjeta, String pin) boolean
+        +cerrarSesion()
         +consultarSaldo() double
         +depositar(double monto) Recibo
         +retirar(double monto) Recibo
         +transferir(String numeroCuentaDestino, double monto) Recibo
+        +pagarServicio(String tipo, String identificador, double monto) Recibo
     }
 
     class Transaccion {
@@ -66,10 +73,39 @@ classDiagram
 
     class Deposito
     class Retiro
+
     class Transferencia {
         -CuentaBancaria cuentaDestino
+        +getCuentaDestino() CuentaBancaria
     }
-    class Recibo
+
+    class Factura {
+        -String tipo
+        -String identificador
+        -double saldo
+        -boolean pagada
+        +getTipo() String
+        +getIdentificador() String
+        +getSaldo() double
+        +estaPagada() boolean
+        +getLlave() String
+        +pagar(double monto) boolean
+    }
+
+    class PagoServicio {
+        -Factura factura
+        +getFactura() Factura
+        +ejecutar() boolean
+        +getTipo() String
+    }
+
+    class Recibo {
+        -Transaccion transaccion
+        -boolean exitosa
+        +imprimir() String
+        +toString() String
+    }
+
     class Simulador
 
     CuentaBancaria --> Cliente
@@ -77,14 +113,17 @@ classDiagram
     Tarjeta --> CuentaBancaria
     Banco --> Tarjeta
     Banco --> CuentaBancaria
+    Banco --> Factura
     CajeroAutomatico --> Banco
     CajeroAutomatico --> Tarjeta
     Transaccion --> CuentaBancaria
     Transaccion <|-- Deposito
     Transaccion <|-- Retiro
     Transaccion <|-- Transferencia
+    Transaccion <|-- PagoServicio
     Transaccion --> Recibo
     Transferencia --> CuentaBancaria
+    PagoServicio --> Factura
     Simulador --> CajeroAutomatico
 ```
 
@@ -98,6 +137,7 @@ flowchart LR
     Retirar[Retirar dinero]
     Depositar[Depositar dinero]
     Transferir[Transferir dinero]
+    PagarServicio[Pagar servicio parcial o total]
     Recibo[Generar recibo]
     Banco[Sistema bancario]
 
@@ -106,24 +146,25 @@ flowchart LR
     Usuario --> Retirar
     Usuario --> Depositar
     Usuario --> Transferir
+    Usuario --> PagarServicio
     Consultar --> Banco
     Retirar --> Banco
     Depositar --> Banco
     Transferir --> Banco
+    PagarServicio --> Banco
     Retirar --> Recibo
     Depositar --> Recibo
     Transferir --> Recibo
+    PagarServicio --> Recibo
 ```
 
 ## Diagrama De Actividades Con Carriles
-
-Este es el diagrama de actividades con carriles de responsabilidad. Cada carril representa quien participa en una parte del proceso.
 
 ```mermaid
 flowchart LR
     subgraph Usuario
         U1[Ingresa tarjeta y PIN]
-        U2[Selecciona operacion]
+        U2[Selecciona operacion y monto]
         U3[Lee saldo o recibo]
     end
 
@@ -137,6 +178,7 @@ flowchart LR
     subgraph Banco
         B1[Busca tarjeta]
         B2[Busca cuenta destino si aplica]
+        B3[Busca factura si aplica]
     end
 
     subgraph Tarjeta
@@ -152,8 +194,14 @@ flowchart LR
         CB4[Registra historial]
     end
 
+    subgraph Factura
+        F1[Valida monto contra saldo pendiente]
+        F2[Descuenta parcial o total]
+        F3[Marca pagada si saldo llega a cero]
+    end
+
     subgraph Transaccion
-        TR1[Crea deposito retiro o transferencia]
+        TR1[Crea deposito retiro transferencia o pago]
         TR2[Ejecuta operacion]
         TR3[Genera recibo]
     end
@@ -174,6 +222,10 @@ flowchart LR
     CB2 --> CB3
     CB3 --> CB4
     C3 --> B2
+    C3 --> B3
+    B3 --> F1
+    F1 --> F2
+    F2 --> F3
     CB4 --> TR3
     TR3 --> C4
     C4 --> U3
@@ -186,26 +238,32 @@ flowchart TD
     A[Inicio] --> B[Crear banco]
     B --> C[Crear clientes]
     C --> D[Crear cuentas]
-    D --> E[Crear tarjeta]
-    E --> F[Registrar datos en banco]
-    F --> G[Crear cajero automatico]
-    G --> H[Autenticar tarjeta]
-    H --> I{Autenticacion correcta?}
-    I -- No --> J[Mostrar error]
-    I -- Si --> K[Consultar saldo inicial]
-    K --> L[Retirar]
-    L --> M[Depositar]
-    M --> N[Transferir]
-    N --> O[Probar retiro rechazado]
-    O --> P[Mostrar historial]
-    P --> Q[Mostrar saldo final]
-    Q --> R[Fin]
-    J --> R
+    D --> E[Crear tarjetas]
+    E --> F[Crear facturas]
+    F --> G[Registrar datos en banco]
+    G --> H[Crear cajero automatico]
+    H --> I[Sesion 1: autenticar TAR-201]
+    I --> J{Autenticacion correcta?}
+    J -- No --> K[Mostrar error]
+    J -- Si --> L[Retiro, deposito, transferencia]
+    L --> M[Pagos parciales de telefono]
+    M --> N[Intento sobrepago rechazado]
+    N --> O[Retiro insuficiente rechazado]
+    O --> P[Historial cuenta 1]
+    P --> Q[Cerrar sesion]
+    Q --> R[Sesion 2: autenticar TAR-202]
+    R --> S[Pago parcial energia]
+    S --> T[Intento pago excesivo rechazado]
+    T --> U[Historial cuenta 2]
+    U --> V[Estado final facturas]
+    V --> W[Fin]
+    K --> W
 ```
 
 ## Modelo Entidad-Relacion Conceptual
 
-El proyecto no usa base de datos, pero este modelo ayuda a entender las entidades principales si luego se quisiera persistir informacion.
+El proyecto no usa base de datos, pero este modelo ayuda a entender
+las entidades si luego se quisiera persistir informacion.
 
 ```mermaid
 erDiagram
@@ -213,8 +271,10 @@ erDiagram
     CUENTA_BANCARIA ||--|| TARJETA : asociada
     BANCO ||--o{ CUENTA_BANCARIA : administra
     BANCO ||--o{ TARJETA : emite
+    BANCO ||--o{ FACTURA : registra
     CUENTA_BANCARIA ||--o{ TRANSACCION : registra
     TRANSACCION ||--o| RECIBO : genera
+    FACTURA ||--o{ TRANSACCION : se_paga_con
 
     CLIENTE {
         string nombre
@@ -241,6 +301,13 @@ erDiagram
         datetime fecha
         double monto
         string tipo
+    }
+
+    FACTURA {
+        string tipo
+        string identificador
+        double saldo
+        boolean pagada
     }
 
     RECIBO {

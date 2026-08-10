@@ -14,3 +14,11 @@ desktop.ini
 # Archivos temporales comunes
 *.tmp
 *.log
+
+# Formatos locales de examenes y material de apoyo no versionado
+DocumentacionExamenes/
+Programacion 1 B- Segundo parcial ordinario*.pdf
+pretest-cajero-servicios.html
+pretest-cajero-servicios.pdf
+examen-parcial1-programacion2.html
+logo-umg.png
