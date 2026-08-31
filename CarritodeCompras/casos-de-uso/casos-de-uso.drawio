@@ -1,0 +1,162 @@
+<mxfile host="app.diagrams.net" modified="2026-08-24T13:25:00.000Z" agent="Mozilla/5.0" version="21.0.0" type="device">
+  <diagram id="casos-de-uso-ecommerce" name="Diagrama de Casos de Uso">
+    <mxGraphModel dx="1422" dy="890" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" background="#ffffff" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <!-- Titulo -->
+        <mxCell id="title" value="Diagrama de Casos de Uso - Sistema Carrito de Compras E-Commerce" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1;fontColor=#1E293B;" vertex="1" parent="1">
+          <mxGeometry x="250" y="20" width="670" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Limite del Sistema (System Boundary) -->
+        <mxCell id="sys_boundary" value="Sistema de Comercio Electrónico (Carrito de Compras)" style="shape=rect;html=1;verticalAlign=top;fontStyle=1;whiteSpace=wrap;align=center;fillColor=#F8FAFC;strokeColor=#64748B;strokeWidth=2;dashed=0;fontSize=14;fontColor=#334155;spacingTop=10;" vertex="1" parent="1">
+          <mxGeometry x="240" y="70" width="690" height="690" as="geometry" />
+        </mxCell>
+
+        <!-- Actores -->
+        <!-- Actor 1: Visitante / Usuario No Registrado -->
+        <mxCell id="act_visitante" value="Visitante&#xa;(Usuario No Registrado)" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#E2E8F0;strokeColor=#475569;strokeWidth=2;fontSize=12;fontStyle=1;fontColor=#1E293B;" vertex="1" parent="1">
+          <mxGeometry x="60" y="220" width="60" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- Actor 2: Cliente Registrado -->
+        <mxCell id="act_cliente" value="Cliente&#xa;Registrado" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#DBEAFE;strokeColor=#2563EB;strokeWidth=2;fontSize=12;fontStyle=1;fontColor=#1E293B;" vertex="1" parent="1">
+          <mxGeometry x="60" y="520" width="60" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- Generalizacion entre Actores -->
+        <mxCell id="rel_herencia_actor" value="" style="endArrow=block;endSize=14;endFill=0;html=1;rounded=0;strokeColor=#475569;strokeWidth=2;exitX=0.5;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="act_cliente" target="act_visitante">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="90" y="500" as="sourcePoint" />
+            <mxPoint x="90" y="340" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Actor Secundario: Pasarela de Pagos (Tarjeta de Credito) -->
+        <mxCell id="act_pasarela" value="Pasarela de Pagos&#xa;(Tarjeta de Crédito / Banco)" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#DCFCE7;strokeColor=#16A34A;strokeWidth=2;fontSize=12;fontStyle=1;fontColor=#1E293B;" vertex="1" parent="1">
+          <mxGeometry x="1030" y="470" width="60" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- Casos de Uso -->
+        <!-- CU-01: Registrar Usuario -->
+        <mxCell id="cu_registro" value="CU-01: Registrar Usuario&#xa;(Crear Cuenta de Cliente)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#EFF6FF;strokeColor=#3B82F6;strokeWidth=2;fontSize=12;fontStyle=1;fontColor=#1E3A8A;" vertex="1" parent="1">
+          <mxGeometry x="310" y="110" width="220" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- CU-02: Consultar Catalogo / Productos -->
+        <mxCell id="cu_consultar" value="CU-02: Consultar Catálogo&#xa;de Productos (Precios y Stock)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#EFF6FF;strokeColor=#3B82F6;strokeWidth=2;fontSize=12;fontStyle=1;fontColor=#1E3A8A;" vertex="1" parent="1">
+          <mxGeometry x="310" y="210" width="220" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- CU-03: Cotizar Productos -->
+        <mxCell id="cu_cotizar" value="CU-03: Cotizar Productos&#xa;(Calcular Subtotal e IVA sin comprar)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#EFF6FF;strokeColor=#3B82F6;strokeWidth=2;fontSize=12;fontStyle=1;fontColor=#1E3A8A;" vertex="1" parent="1">
+          <mxGeometry x="310" y="310" width="230" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- CU-04: Comprar Productos (Checkout) -->
+        <mxCell id="cu_comprar" value="CU-04: Comprar Productos&#xa;(Proceso de Checkout y Orden)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FEF3C7;strokeColor=#D97706;strokeWidth=2;fontSize=12;fontStyle=1;fontColor=#78350F;" vertex="1" parent="1">
+          <mxGeometry x="310" y="480" width="230" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- CU-06: Validar Inventario (Include) -->
+        <mxCell id="cu_validar_stock" value="&lt;&lt;include&gt;&gt;&#xa;Validar Inventario&#xa;(Stock &gt;= Cantidad)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#F1F5F9;strokeColor=#64748B;strokeWidth=1.5;dashed=1;fontSize=11;fontStyle=0;fontColor=#334155;" vertex="1" parent="1">
+          <mxGeometry x="670" y="390" width="180" height="65" as="geometry" />
+        </mxCell>
+
+        <!-- CU-05: Pagar con Tarjeta de Credito (Include) -->
+        <mxCell id="cu_pagar_tarjeta" value="CU-05: Pagar con&#xa;Tarjeta de Crédito&#xa;(Exclusivo)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#DCFCE7;strokeColor=#16A34A;strokeWidth=2;fontSize=12;fontStyle=1;fontColor=#14532D;" vertex="1" parent="1">
+          <mxGeometry x="670" y="485" width="200" height="75" as="geometry" />
+        </mxCell>
+
+        <!-- CU-07: Emitir Factura / Comprobante (Include) -->
+        <mxCell id="cu_emitir_recibo" value="&lt;&lt;include&gt;&gt;&#xa;Emitir Comprobante&#xa;de Compra" style="ellipse;whiteSpace=wrap;html=1;fillColor=#F1F5F9;strokeColor=#64748B;strokeWidth=1.5;dashed=1;fontSize=11;fontStyle=0;fontColor=#334155;" vertex="1" parent="1">
+          <mxGeometry x="670" y="590" width="180" height="65" as="geometry" />
+        </mxCell>
+
+        <!-- CU-08: Autenticar Cliente (Include de Comprar) -->
+        <mxCell id="cu_autenticar" value="&lt;&lt;include&gt;&gt;&#xa;Verificar Autenticación&#xa;(Sesión de Cliente Activa)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#F1F5F9;strokeColor=#64748B;strokeWidth=1.5;dashed=1;fontSize=11;fontStyle=0;fontColor=#334155;" vertex="1" parent="1">
+          <mxGeometry x="325" y="660" width="200" height="65" as="geometry" />
+        </mxCell>
+
+        <!-- Relaciones de Asociacion: Visitante -->
+        <mxCell id="rel_vis_reg" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#475569;strokeWidth=1.5;exitX=1;exitY=0.33;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="act_visitante" target="cu_registro">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="130" y="260" as="sourcePoint" />
+            <mxPoint x="300" y="150" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="rel_vis_cons" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#475569;strokeWidth=1.5;exitX=1;exitY=0.33;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="act_visitante" target="cu_consultar">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="130" y="260" as="sourcePoint" />
+            <mxPoint x="310" y="245" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="rel_vis_cot" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#475569;strokeWidth=1.5;exitX=1;exitY=0.33;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="act_visitante" target="cu_cotizar">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="130" y="260" as="sourcePoint" />
+            <mxPoint x="310" y="345" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Relaciones de Asociacion: Cliente Registrado -->
+        <mxCell id="rel_cli_comp" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#2563EB;strokeWidth=2;exitX=1;exitY=0.33;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="act_cliente" target="cu_comprar">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="130" y="560" as="sourcePoint" />
+            <mxPoint x="310" y="520" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Relaciones de Include desde Comprar -->
+        <!-- Comprar -> Validar Stock -->
+        <mxCell id="inc_comp_stock" value="&lt;&lt;include&gt;&gt;" style="endArrow=open;endSize=10;dashed=1;html=1;rounded=0;strokeColor=#D97706;strokeWidth=1.5;exitX=0.95;exitY=0.3;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="cu_comprar" target="cu_validar_stock">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="540" y="500" as="sourcePoint" />
+            <mxPoint x="670" y="420" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Comprar -> Pagar Tarjeta -->
+        <mxCell id="inc_comp_pago" value="&lt;&lt;include&gt;&gt;" style="endArrow=open;endSize=10;dashed=1;html=1;rounded=0;strokeColor=#D97706;strokeWidth=2;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="cu_comprar" target="cu_pagar_tarjeta">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="540" y="520" as="sourcePoint" />
+            <mxPoint x="670" y="520" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Comprar -> Emitir Comprobante -->
+        <mxCell id="inc_comp_recibo" value="&lt;&lt;include&gt;&gt;" style="endArrow=open;endSize=10;dashed=1;html=1;rounded=0;strokeColor=#D97706;strokeWidth=1.5;exitX=0.95;exitY=0.75;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="cu_comprar" target="cu_emitir_recibo">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="540" y="550" as="sourcePoint" />
+            <mxPoint x="670" y="620" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Comprar -> Autenticar Cliente -->
+        <mxCell id="inc_comp_auth" value="&lt;&lt;include&gt;&gt;" style="endArrow=open;endSize=10;dashed=1;html=1;rounded=0;strokeColor=#D97706;strokeWidth=1.5;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="cu_comprar" target="cu_autenticar">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="425" y="560" as="sourcePoint" />
+            <mxPoint x="425" y="660" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Relacion Pagar Tarjeta -> Pasarela de Pagos -->
+        <mxCell id="rel_pago_pasarela" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#16A34A;strokeWidth=2;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.33;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="cu_pagar_tarjeta" target="act_pasarela">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="870" y="522" as="sourcePoint" />
+            <mxPoint x="1030" y="503" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Notas explicativas de Reglas de Negocio -->
+        <mxCell id="nota_reglas" value="Reglas de Negocio Principales:&#xa;1. Solo clientes registrados pueden comprar (Checkout).&#xa;2. No se puede comprar si stock &lt; cantidad solicitada.&#xa;3. El método de pago admitido es exclusivamente Tarjeta de Crédito.&#xa;4. La cotización es pública y no reserva inventario." style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#FFFBEB;strokeColor=#F59E0B;fontSize=11;align=left;fontColor=#78350F;size=14;" vertex="1" parent="1">
+          <mxGeometry x="580" y="100" width="330" height="90" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

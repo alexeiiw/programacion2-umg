@@ -1,115 +1,64 @@
 # Programacion 2 UMG Portales
 
-Ultima actualizacion: 10 de agosto de 2026
+Ultima actualizacion: 31 de agosto de 2026
 
 Bienvenidos al repositorio de apoyo para el curso de Programacion 2 de la Universidad Mariano Galvez, sede Portales.
 
-El objetivo principal de este repositorio es practicar programacion orientada a objetos en Java usando BlueJ.
+El objetivo principal de este repositorio es practicar programacion orientada a objetos en Java usando BlueJ y la transicion estructurada a C# (.NET).
+
+## Alcance Del Repositorio
+
+Este repositorio contiene el material que se comparte con los alumnos: ejemplos, proyectos base, tareas resueltas y documentacion tecnica necesaria para las practicas del curso.
+
+El material interno de preparacion docente, instaladores, archivos compilados y documentacion privada no forma parte del repositorio publico.
 
 ## Objetivos Del Repositorio
 
 - Comprender clases, objetos, atributos y metodos.
 - Aplicar encapsulamiento, abstraccion, herencia y polimorfismo.
-- Organizar ejercicios por carpetas independientes.
+- Organizar ejercicios y proyectos por carpetas independientes.
+- Modelar soluciones mediante diagramas de Casos de Uso y Flujo (Draw.io).
+- Transicionar de modelos POO en BlueJ a implementaciones en C# (.NET).
 - Compartir ejemplos base para que cada estudiante pueda analizarlos, ejecutarlos y mejorarlos.
 
 ## Estructura
 
-Cada proyecto debe vivir en su propia carpeta.
-
-Ejemplos:
+Cada proyecto vive en su propia carpeta independiente:
 
 ```text
-CajeroAutomatico/
-HolaMundo/
-Calculadora/
-SistemaNotas/
+CajeroAutomatico/      -> Simulador ATM con pago de servicios (POO en Java)
+CarritodeCompras/      -> Modulo integral E-Commerce (Casos de uso, flujo, BlueJ y C#)
+HolaMundoBlueJ/        -> Proyecto introductorio de POO y herencia (Animal -> Perro)
+TareasResueltas/       -> Soluciones de tareas y ejercicios de apoyo
 ```
 
-El proyecto actual disponible es:
+---
+
+## Modulo CarritodeCompras (Semanas 7 y 8)
+
+Modulo metodologico completo que cubre el ciclo de vida del software desde los diagramas hasta la ejecucion en codigo:
 
 ```text
-CajeroAutomatico/
-HolaMundoBlueJ/
-TareasResueltas/
+CarritodeCompras/
+├── casos-de-uso/        -> Diagrama UML en Draw.io y documentacion de casos de uso
+├── diagramas-de-flujo/  -> Diagrama de flujo detallado en Draw.io con reglas de negocio
+├── bluej/               -> Banco de objetos base en Java para BlueJ (Persona, Usuario, Cliente, Documento, TarjetaCredito, Producto, CarritoCompras)
+└── CarritodeCompras/    -> Proyecto de consola en C# (.NET 6) con logica transaccional
 ```
 
-## Como Usar BlueJ
+### Reglas de Negocio del Sistema:
+1. **Autenticacion**: Solo clientes registrados y autenticados pueden comprar.
+2. **Inventario**: Solo se pueden comprar articulos con existencias en stock (`Stock >= Cantidad`).
+3. **Metodo de Pago**: Exclusividad de cobro con **Tarjeta de Credito**.
 
-1. Abrir BlueJ.
-2. Ir a `Project`.
-3. Seleccionar `Open Project...`.
-4. Elegir la carpeta del proyecto, por ejemplo `CajeroAutomatico`.
-5. Presionar `Compile` para compilar todas las clases.
-6. Si una clase tiene `main`, hacer clic derecho sobre esa clase.
-7. Seleccionar `void main(String[] args)`.
-8. Presionar `OK`.
-9. Revisar la salida en la terminal de BlueJ.
-
-## Como Ver El Codigo
-
-1. Abrir el proyecto en BlueJ.
-2. Dar doble clic sobre cualquier clase.
-3. Revisar atributos, constructores y metodos.
-4. Identificar como se relacionan las clases.
-5. Modificar el codigo y volver a compilar.
-
-## Como Ver La Interfaz De BlueJ
-
-BlueJ muestra las clases como cajas dentro del proyecto.
-
-- Las flechas de herencia muestran relaciones `extends`.
-- Las flechas de uso muestran dependencias entre clases.
-- El boton `Compile` valida si el codigo tiene errores.
-- La terminal muestra los resultados de `System.out.println`.
-
-## Como Usar El Repositorio
-
-1. Instalar Git si aun no esta instalado.
-2. Abrir PowerShell o Git Bash.
-3. Ir a la carpeta donde se desea guardar el repositorio.
-4. Clonar el repositorio.
-5. Abrir cada carpeta de proyecto desde BlueJ.
-6. No subir archivos `.class`, porque son generados al compilar.
-7. No modificar archivos de otros proyectos sin indicacion del docente.
-8. Crear nuevas carpetas para nuevos ejercicios.
-9. Usar nombres claros para clases, metodos y variables.
-
-Comandos basicos:
-
+### Como probar el proyecto en C#:
 ```powershell
-git clone https://github.com/alexeiiw/programacion2-umg.git
-cd programacion2-umg
-dir
+cd CarritodeCompras\CarritodeCompras
+dotnet build
+dotnet run
 ```
 
-Para actualizar el repositorio local con cambios nuevos:
-
-```powershell
-git pull
-```
-
-Para ver el estado de sus cambios:
-
-```powershell
-git status
-```
-
-Para probar un proyecto desde PowerShell:
-
-```powershell
-cd CajeroAutomatico
-javac *.java
-java Simulador
-```
-
-## Recomendaciones Para Los Estudiantes
-
-- Compilen frecuentemente.
-- Prueben los cambios con ejemplos simples.
-- Lean primero las clases principales antes de modificar.
-- Eviten copiar codigo sin entenderlo.
-- Documenten decisiones importantes con comentarios breves.
+---
 
 ## Proyecto CajeroAutomatico
 
@@ -120,55 +69,56 @@ Este proyecto simula operaciones de un cajero automatico:
 - Retiro.
 - Deposito.
 - Transferencia.
-- Pago de servicios.
-- Facturas con pago parcial o total.
+- Pago de servicios (Facturas de Telefono y Energia Electrica con pago parcial/total).
 - Generacion de recibos.
 
-El pago de servicios permite trabajar con facturas de telefono y energia electrica.
-Telefono se identifica por numero de linea fija y energia electrica por numero de correlativo.
-El sistema valida que no se pague mas del saldo pendiente de una factura.
+Para compilar y probar:
+```powershell
+cd CajeroAutomatico
+javac *.java
+java Simulador
+```
 
-Clases destacadas del modulo de servicios:
-
-- `Factura`: representa una factura con tipo, identificador, saldo pendiente y estado pagado/pendiente.
-- `PagoServicio`: transaccion que permite pagar parcial o totalmente una factura registrada.
-
-Tambien sirve como ejemplo de POO usando encapsulamiento, abstraccion, herencia y polimorfismo.
-
-Documentacion especifica:
-
-- `CajeroAutomatico/README.md`: guia completa del proyecto.
-- `CajeroAutomatico/README.txt`: resumen visible desde BlueJ.
-- `CajeroAutomatico/diagramas.md`: diagramas de clases, casos de uso, actividades con carriles, flujo y modelo entidad-relacion conceptual.
+---
 
 ## Proyecto HolaMundoBlueJ
 
-Este proyecto es un ejemplo inicial muy simple para abrir, compilar y ejecutar en BlueJ.
-
-Incluye:
-
+Proyecto inicial para abrir, compilar y ejecutar en BlueJ:
 - `Animal`: clase base.
 - `Perro`: clase hija que hereda de `Animal`.
 - `Simulador`: crea un objeto `Perro` y muestra datos en consola.
 
 Para probarlo desde PowerShell:
-
 ```powershell
 cd HolaMundoBlueJ
 javac *.java
 java Simulador
 ```
 
+---
+
 ## Carpeta TareasResueltas
 
-Esta carpeta se usara para publicar codigo de tareas ya resueltas o ejemplos adicionales del curso.
-
-La idea es que los estudiantes puedan revisar soluciones, comparar enfoques y usarlas como apoyo para estudiar.
-
-Indice actual:
-
-- `TareasResueltas/Semana2/ConversorMaya.cpp`
-- `TareasResueltas/Semana2/ConversorMaya.cs`
+Codigo de tareas resueltas y ejemplos adicionales:
+- `TareasResueltas/Semana2/ConversorMaya.cpp` y `.cs`
 - `TareasResueltas/PreTest/CajeroAutomatico/Simulador.java`
-- `TareasResueltas/PreTest/ConversorBase20.cpp`
-- `TareasResueltas/PreTest/ConversorBase20.cs`
+- `TareasResueltas/PreTest/ConversorBase20.cpp` y `.cs`
+
+---
+
+## Como Usar BlueJ
+
+1. Abrir BlueJ.
+2. Ir a `Project` -> `Open Project...`.
+3. Elegir la carpeta del proyecto (por ejemplo `CajeroAutomatico` o `CarritodeCompras\bluej`).
+4. Presionar `Compile` para compilar las clases.
+5. Hacer clic derecho sobre la clase con `main` o instanciar objetos directamente en el banco de objetos.
+
+## Como Usar el Repositorio con Git
+
+```powershell
+git clone https://github.com/alexeiiw/programacion2-umg.git
+cd programacion2-umg
+git status
+git pull
+```

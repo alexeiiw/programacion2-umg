@@ -1,14 +1,18 @@
 # Archivos compilados de Java
 *.class
 
+# Archivos generados por .NET y compiladores
+bin/
+obj/
+
 # Memoria local del asistente, no es material para alumnos
 MEMORIA_PROYECTO.txt
 
 # Instalacion local de BlueJ y archivos personales
-bluej/
-userhome/
-BlueJ-windows-*.zip
-bluej.exe
+/bluej/
+/userhome/
+/BlueJ-windows-*.zip
+/bluej.exe
 desktop.ini
 
 # Archivos temporales comunes
