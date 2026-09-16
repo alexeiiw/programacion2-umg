@@ -29,6 +29,7 @@ Cada proyecto vive en su propia carpeta independiente:
 CajeroAutomatico/      -> Simulador ATM con pago de servicios (POO en Java)
 CarritodeCompras/      -> Modulo integral E-Commerce (Casos de uso, flujo, BlueJ y C#)
 HolaMundoBlueJ/        -> Proyecto introductorio de POO y herencia (Animal -> Perro)
+TicketsSoporte/        -> Automatizacion de tickets de soporte (BlueJ y C#)
 TareasResueltas/       -> Soluciones de tareas y ejercicios de apoyo
 ```
 
@@ -54,6 +55,22 @@ CarritodeCompras/
 ### Como probar el proyecto en C#:
 ```powershell
 cd CarritodeCompras\CarritodeCompras
+dotnet build
+dotnet run
+```
+
+---
+
+## Modulo TicketsSoporte
+
+Modulo practico para automatizar asignacion, resolucion y control de errores en tickets de soporte tecnico corporativo.
+
+Incluye casos de uso, diagramas de flujo, clases Java para BlueJ y proyecto de consola C# .NET 6 con clase abstracta, herencia, polimorfismo y manejo de errores con try/catch.
+
+Para probar el proyecto en C#:
+
+```powershell
+cd TicketsSoporte\TicketsSoporte
 dotnet build
 dotnet run
 ```
