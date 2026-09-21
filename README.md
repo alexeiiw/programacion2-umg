@@ -1,6 +1,6 @@
 # Programacion 2 UMG Portales
 
-Ultima actualizacion: 31 de agosto de 2026
+Ultima actualizacion: 16 de septiembre de 2026
 
 Bienvenidos al repositorio de apoyo para el curso de Programacion 2 de la Universidad Mariano Galvez, sede Portales.
 
@@ -29,6 +29,7 @@ Cada proyecto vive en su propia carpeta independiente:
 CajeroAutomatico/      -> Simulador ATM con pago de servicios (POO en Java)
 CarritodeCompras/      -> Modulo integral E-Commerce (Casos de uso, flujo, BlueJ y C#)
 HolaMundoBlueJ/        -> Proyecto introductorio de POO y herencia (Animal -> Perro)
+SistemaAlumnos/        -> Solucion local del sistema de ingreso de notas (BlueJ y C#)
 TicketsSoporte/        -> Automatizacion de tickets de soporte (BlueJ y C#)
 TareasResueltas/       -> Soluciones de tareas y ejercicios de apoyo
 ```
@@ -71,6 +72,24 @@ Para probar el proyecto en C#:
 
 ```powershell
 cd TicketsSoporte\TicketsSoporte
+dotnet build
+dotnet run
+```
+
+---
+
+## Modulo SistemaAlumnos
+
+Solucion local de referencia para el Pre Test 2: ingreso, validacion y consulta de notas de estudiantes.
+
+Incluye casos de uso, flujo, clases Java para BlueJ y proyecto de consola C# con abstraccion, herencia, polimorfismo y `try-catch`.
+
+Este modulo se mantiene local durante la preparacion del parcial y se revisara antes de publicarlo en GitHub.
+
+Para probar el proyecto en C#:
+
+```powershell
+cd SistemaAlumnos\SistemaAlumnos
 dotnet build
 dotnet run
 ```
@@ -120,6 +139,8 @@ Codigo de tareas resueltas y ejemplos adicionales:
 - `TareasResueltas/Semana2/ConversorMaya.cpp` y `.cs`
 - `TareasResueltas/PreTest/CajeroAutomatico/Simulador.java`
 - `TareasResueltas/PreTest/ConversorBase20.cpp` y `.cs`
+
+El proyecto `SistemaAlumnos/` del Pre Test 2 se mantiene local durante la preparacion del parcial y no se publica en GitHub todavia. Se revisara y publicara la proxima semana despues de la evaluacion.
 
 ---
 
