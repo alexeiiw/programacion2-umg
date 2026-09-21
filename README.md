@@ -29,7 +29,7 @@ Cada proyecto vive en su propia carpeta independiente:
 CajeroAutomatico/      -> Simulador ATM con pago de servicios (POO en Java)
 CarritodeCompras/      -> Modulo integral E-Commerce (Casos de uso, flujo, BlueJ y C#)
 HolaMundoBlueJ/        -> Proyecto introductorio de POO y herencia (Animal -> Perro)
-SistemaAlumnos/        -> Solucion local del sistema de ingreso de notas (BlueJ y C#)
+SistemaAlumnos/        -> Sistema de ingreso y consulta de notas (BlueJ y C#)
 TicketsSoporte/        -> Automatizacion de tickets de soporte (BlueJ y C#)
 TareasResueltas/       -> Soluciones de tareas y ejercicios de apoyo
 ```
@@ -84,7 +84,7 @@ Solucion local de referencia para el Pre Test 2: ingreso, validacion y consulta 
 
 Incluye casos de uso, flujo, clases Java para BlueJ y proyecto de consola C# con abstraccion, herencia, polimorfismo y `try-catch`.
 
-Este modulo se mantiene local durante la preparacion del parcial y se revisara antes de publicarlo en GitHub.
+Modulo publicado como solucion de referencia despues del Pre Test 2.
 
 Para probar el proyecto en C#:
 
@@ -140,7 +140,7 @@ Codigo de tareas resueltas y ejemplos adicionales:
 - `TareasResueltas/PreTest/CajeroAutomatico/Simulador.java`
 - `TareasResueltas/PreTest/ConversorBase20.cpp` y `.cs`
 
-El proyecto `SistemaAlumnos/` del Pre Test 2 se mantiene local durante la preparacion del parcial y no se publica en GitHub todavia. Se revisara y publicara la proxima semana despues de la evaluacion.
+El proyecto `SistemaAlumnos/` del Pre Test 2 ya esta disponible como solucion de referencia despues de la evaluacion.
 
 ---
 

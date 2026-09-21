@@ -27,7 +27,7 @@ PreTest/
 - `PreTest/ConversorBase20.cpp`: conversor base 10 a base 20 en C++.
 - `PreTest/ConversorBase20.cs`: conversor base 10 a base 20 en C#.
 
-La solucion del Pre Test 2 `SistemaAlumnos/` se mantiene local por ahora y no forma parte del repositorio publicado hasta la proxima semana.
+La solucion del Pre Test 2 `SistemaAlumnos/` esta publicada como referencia despues de la evaluacion.
 
 ## Recomendaciones
 
