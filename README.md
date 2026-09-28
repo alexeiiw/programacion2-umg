@@ -30,6 +30,7 @@ CajeroAutomatico/      -> Simulador ATM con pago de servicios (POO en Java)
 CarritodeCompras/      -> Modulo integral E-Commerce (Casos de uso, flujo, BlueJ y C#)
 HolaMundoBlueJ/        -> Proyecto introductorio de POO y herencia (Animal -> Perro)
 SistemaAlumnos/        -> Sistema de ingreso y consulta de notas (BlueJ y C#)
+SistemaVeterinario/    -> Sistema de control veterinario (BlueJ y C#)
 TicketsSoporte/        -> Automatizacion de tickets de soporte (BlueJ y C#)
 TareasResueltas/       -> Soluciones de tareas y ejercicios de apoyo
 ```
@@ -90,6 +91,22 @@ Para probar el proyecto en C#:
 
 ```powershell
 cd SistemaAlumnos\SistemaAlumnos
+dotnet build
+dotnet run
+```
+
+---
+
+## Modulo SistemaVeterinario
+
+Solucion de referencia del Segundo Parcial: registro de consultas veterinarias, validacion de peso, temperatura y costo, calculo del total y estado clinico.
+
+Incluye casos de uso, flujo, clases Java para BlueJ y proyecto de consola C# con abstraccion, herencia, polimorfismo y `try-catch`.
+
+Para probar el proyecto en C#:
+
+```powershell
+cd SistemaVeterinario\SistemaVeterinario
 dotnet build
 dotnet run
 ```
