@@ -8,6 +8,9 @@ obj/
 # Memoria local del asistente, no es material para alumnos
 MEMORIA_PROYECTO.txt
 
+# Version local en desarrollo, pendiente de autorizacion para publicar
+/SistemaVeterinarioV2/
+
 # Instalacion local de BlueJ y archivos personales
 /bluej/
 /userhome/

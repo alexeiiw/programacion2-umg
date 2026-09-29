@@ -31,6 +31,7 @@ CarritodeCompras/      -> Modulo integral E-Commerce (Casos de uso, flujo, BlueJ
 HolaMundoBlueJ/        -> Proyecto introductorio de POO y herencia (Animal -> Perro)
 SistemaAlumnos/        -> Sistema de ingreso y consulta de notas (BlueJ y C#)
 SistemaVeterinario/    -> Sistema de control veterinario (BlueJ y C#)
+GestionAcademica/      -> CRUD academico en C# con SQLite
 TicketsSoporte/        -> Automatizacion de tickets de soporte (BlueJ y C#)
 TareasResueltas/       -> Soluciones de tareas y ejercicios de apoyo
 ```
@@ -110,6 +111,22 @@ cd SistemaVeterinario\SistemaVeterinario
 dotnet build
 dotnet run
 ```
+
+---
+
+## Ejemplo GestionAcademica
+
+Aplicacion de consola en C# para explorar CRUD de estudiantes, cursos e inscripciones con SQLite. Incluye esquema SQL, relaciones entre tablas, validaciones, POO y manejo de errores con `try-catch`.
+
+Para probar:
+
+```powershell
+cd GestionAcademica
+dotnet restore
+dotnet run
+```
+
+El proveedor SQLite se restaura desde NuGet y la base de datos local se inicializa al ejecutar el programa. Consulte `GestionAcademica/README.md` para pasos y estructura detallados.
 
 ---
 
