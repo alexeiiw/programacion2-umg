@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Informe - Sistema de Prestamos de Biblioteca</title>
+<style>
+@page { size: Letter; margin: 16mm 14mm; }
+* { box-sizing: border-box; }
+body { font-family: "Segoe UI", Arial, Helvetica, sans-serif; color: #1c2733; font-size: 10.5pt; line-height: 1.5; margin: 0; }
+h1, h2, h3, h4 { color: #0b2a4a; margin: 0 0 6px 0; }
+h2 { font-size: 15pt; border-bottom: 2px solid #0b2a4a; padding-bottom: 4px; margin-top: 6px; }
+h3 { font-size: 12.5pt; }
+p { margin: 0 0 8px 0; text-align: justify; }
+.cover { height: 245mm; display: flex; flex-direction: column; justify-content: space-between; page-break-after: always; }
+.cover-top { text-align: center; border-bottom: 3px solid #0b2a4a; padding-bottom: 14px; }
+.cover-top .uni { font-size: 17pt; font-weight: 700; letter-spacing: 1px; color: #0b2a4a; }
+.cover-top .sede { font-size: 11pt; color: #33506e; margin-top: 4px; }
+.cover-mid { text-align: center; margin-top: 30mm; }
+.cover-mid .kicker { text-transform: uppercase; letter-spacing: 3px; color: #8a5a00; font-size: 10pt; }
+.cover-mid .titulo { font-size: 27pt; font-weight: 800; color: #0b2a4a; margin: 10px 0; line-height: 1.15; }
+.cover-mid .subtitulo { font-size: 13pt; color: #33506e; }
+.cover-mid .badge { display: inline-block; margin-top: 18px; border: 2px solid #0b2a4a; color: #0b2a4a; border-radius: 6px; padding: 6px 16px; font-weight: 700; font-size: 11pt; }
+.cover-data { margin: 0 auto; width: 78%; border: 1px solid #c9d4e0; border-radius: 8px; overflow: hidden; }
+.cover-data table { width: 100%; border-collapse: collapse; font-size: 10.5pt; }
+.cover-data td { padding: 7px 12px; border-bottom: 1px solid #e2e8ef; }
+.cover-data tr:last-child td { border-bottom: 0; }
+.cover-data td.k { width: 38%; background: #f2f6fa; color: #33506e; font-weight: 600; }
+.cover-foot { text-align: center; color: #6b7c90; font-size: 9.5pt; border-top: 1px solid #d7e0ea; padding-top: 10px; }
+.section { page-break-before: always; }
+.content > section:first-of-type { page-break-before: avoid; }
+ul, ol { margin: 4px 0 10px 0; padding-left: 20px; }
+li { margin-bottom: 3px; }
+.toc { list-style: none; padding: 0; }
+.toc li { display: flex; gap: 8px; padding: 5px 0; border-bottom: 1px dotted #cdd8e3; font-size: 10.5pt; }
+.toc-num { color: #8a5a00; font-weight: 700; width: 26px; }
+.toc-name { font-family: Consolas, "Courier New", monospace; }
+.toc-layer { margin-left: auto; color: #6b7c90; font-size: 9pt; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.card { border: 1px solid #c9d4e0; border-radius: 8px; padding: 10px 12px; background: #fbfdff; }
+.card h4 { margin-bottom: 4px; color: #0b2a4a; }
+.tag { display: inline-block; background: #0b2a4a; color: #fff; border-radius: 4px; padding: 1px 8px; font-size: 9pt; margin-right: 4px; }
+table.data { width: 100%; border-collapse: collapse; margin: 6px 0 12px 0; font-size: 10pt; }
+table.data th { background: #0b2a4a; color: #fff; text-align: left; padding: 6px 9px; }
+table.data td { border: 1px solid #d7e0ea; padding: 6px 9px; vertical-align: top; }
+table.data tr:nth-child(even) td { background: #f5f8fb; }
+.kpi { display: flex; gap: 10px; margin: 10px 0 14px 0; }
+.kpi .box { flex: 1; border: 1px solid #c9d4e0; border-top: 3px solid #8a5a00; border-radius: 8px; padding: 10px; text-align: center; }
+.kpi .num { font-size: 20pt; font-weight: 800; color: #0b2a4a; }
+.kpi .lbl { font-size: 9pt; color: #6b7c90; text-transform: uppercase; letter-spacing: 1px; }
+.file { page-break-before: always; }
+.file-head { border-left: 6px solid #8a5a00; background: #f2f6fa; padding: 8px 12px; border-radius: 0 8px 8px 0; margin-bottom: 6px; }
+.file-head h3 { font-family: Consolas, "Courier New", monospace; margin: 2px 0; }
+.file-num { font-size: 8.5pt; text-transform: uppercase; letter-spacing: 1px; color: #8a5a00; font-weight: 700; }
+.file-layer { font-size: 9pt; color: #33506e; }
+.file-desc { font-size: 9.8pt; color: #33506e; margin-bottom: 8px; }
+.code { font-family: Consolas, "Courier New", monospace; font-size: 8.4pt; line-height: 1.32; border: 1px solid #cfd9e4; border-radius: 6px; background: #fbfdff; padding: 8px 6px 8px 0; }
+.line { display: flex; min-height: 1.32em; }
+.line:nth-child(even) { background: #f4f8fc; }
+.ln { flex: 0 0 34px; text-align: right; padding-right: 8px; color: #9aa8b8; user-select: none; }
+.lc { flex: 1 1 auto; white-space: pre-wrap; word-break: break-word; padding-right: 6px; }
+.cm { color: #1a7f37; font-style: italic; }
+.note { border: 1px solid #e0c98a; background: #fdf8ec; border-radius: 6px; padding: 8px 12px; font-size: 10pt; }
+code { font-family: Consolas, "Courier New", monospace; background: #eef3f8; padding: 1px 5px; border-radius: 4px; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover-top">
+    <div class="uni">UNIVERSIDAD MARIANO GALVEZ DE GUATEMALA</div>
+    <div class="sede">Centro Universitario Portales Domingo, Guatemala &middot; Ingenieria en Sistemas</div>
+  </div>
+  <div class="cover-mid">
+    <div class="kicker">Programacion 2 &middot; Documentacion Tecnica</div>
+    <div class="titulo">Sistema de Prestamos<br>de Biblioteca</div>
+    <div class="subtitulo">Informe academico y anexo de codigo fuente en C# con SQLite</div>
+    <div class="badge">Circuito completo de base de datos</div>
+  </div>
+  <div class="cover-data">
+    <table>
+      <tr><td class="k">Proyecto</td><td>Sistema de Prestamos de Biblioteca</td></tr>
+      <tr><td class="k">Lenguaje / Plataforma</td><td>C# / .NET 6 (aplicacion de consola)</td></tr>
+      <tr><td class="k">Motor de base de datos</td><td>SQLite mediante Microsoft.Data.Sqlite 6.0.36</td></tr>
+      <tr><td class="k">Alcance</td><td>Tablas, CRUD, prestamos y devoluciones</td></tr>
+      <tr><td class="k">Asignatura</td><td>Programacion 2</td></tr>
+      <tr><td class="k">Fecha</td><td>09 de octubre de 2026</td></tr>
+    </table>
+  </div>
+  <div class="cover-foot">
+    Documento generado automaticamente a partir del codigo fuente del proyecto. Incluye la totalidad de los archivos.
+  </div>
+</div>
+
+<div class="content">
+
+<section>
+  <h2>1. Resumen Ejecutivo</h2>
+  <p>El presente informe documenta el proyecto <b>Sistema de Prestamos de Biblioteca</b>, desarrollado en lenguaje C# sobre la plataforma .NET 6 y con persistencia en una base de datos SQLite. Su proposito didactico es recorrer de forma completa el circuito de una base de datos: identificar entidades y relaciones, modelar las tablas, conectarse al motor desde el codigo, implementar las operaciones CRUD (crear, consultar, actualizar y eliminar) y aplicar reglas de negocio con manejo de errores controlado.</p>
+  <p>El sistema administra tres entidades relacionadas: <b>Lectores</b>, <b>Libros</b> y <b>Prestamos</b>. Un prestamo asocia un lector con un libro e incluye las fechas de inicio, limite y devolucion. El sistema controla la disponibilidad de ejemplares, impide prestamos sin existencias y calcula el estado de cada prestamo (Prestado, Vencido o Devuelto).</p>
+
+  <div class="kpi">
+    <div class="box"><div class="num">11</div><div class="lbl">Archivos</div></div>
+    <div class="box"><div class="num">3</div><div class="lbl">Tablas</div></div>
+    <div class="box"><div class="num">4</div><div class="lbl">Capas</div></div>
+    <div class="box"><div class="num">620</div><div class="lbl">Lineas de codigo</div></div>
+  </div>
+</section>
+
+<section>
+  <h2>2. Objetivos</h2>
+  <ul>
+    <li>Modelar un caso de uso real mediante tablas relacionadas con claves foraneas.</li>
+    <li>Implementar tecnicas de Programacion Orientada a Objetos: abstraccion, herencia, polimorfismo y encapsulamiento.</li>
+    <li>Aplicar el patron de separacion por capas: dominio, persistencia y aplicacion.</li>
+    <li>Ejecutar operaciones CRUD seguras usando consultas parametrizadas y transacciones.</li>
+    <li>Controlar errores de entrada y de negocio mediante <code>try-catch</code> sin cerrar la aplicacion.</li>
+    <li>Distribuir el proyecto de forma portable en SQLite, sin requerir un servidor de base de datos.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>3. Arquitectura y Estructura</h2>
+  <p>El proyecto se organiza en cuatro capas que separan las responsabilidades y facilitan el mantenimiento:</p>
+  <div class="grid2">
+    <div class="card"><h4>Dominio</h4><p>Clases de negocio: <code>Persona</code>, <code>Lector</code>, <code>Libro</code> y <code>Prestamo</code>. Contienen las reglas y validaciones.</p></div>
+    <div class="card"><h4>Persistencia</h4><p><code>InicializadorBaseDatos</code> crea la base y las tablas; <code>RepositorioBiblioteca</code> ejecuta el CRUD sobre SQLite.</p></div>
+    <div class="card"><h4>Aplicacion</h4><p><code>MenuBiblioteca</code> presenta las opciones, captura datos y muestra resultados en consola.</p></div>
+    <div class="card"><h4>Configuracion</h4><p><code>Program.cs</code> y el archivo <code>.csproj</code> arrancan la aplicacion y declaran la dependencia de SQLite.</p></div>
+  </div>
+
+  <h3 style="margin-top:14px;">Inventario de archivos del codigo</h3>
+  <table class="data">
+    <tr><th style="width:52%;">Archivo</th><th>Capa / Rol</th></tr>
+    <tr><td><code>PrestamosBiblioteca.csproj</code></td><td>Configuracion del proyecto</td></tr>
+    <tr><td><code>Program.cs</code></td><td>Punto de entrada</td></tr>
+    <tr><td><code>Dominio/Persona.cs</code></td><td>Dominio (POO)</td></tr>
+    <tr><td><code>Dominio/Lector.cs</code></td><td>Dominio (POO)</td></tr>
+    <tr><td><code>Dominio/Libro.cs</code></td><td>Dominio (POO)</td></tr>
+    <tr><td><code>Dominio/Prestamo.cs</code></td><td>Dominio (POO)</td></tr>
+    <tr><td><code>Persistencia/InicializadorBaseDatos.cs</code></td><td>Persistencia (SQLite)</td></tr>
+    <tr><td><code>Persistencia/RepositorioBiblioteca.cs</code></td><td>Persistencia (SQLite)</td></tr>
+    <tr><td><code>Aplicacion/MenuBiblioteca.cs</code></td><td>Aplicacion (consola)</td></tr>
+    <tr><td><code>BaseDatos/crear_tablas.sql</code></td><td>Base de datos</td></tr>
+    <tr><td><code>README.md</code></td><td>Documentacion</td></tr>
+  </table>
+</section>
+
+<section>
+  <h2>4. Diseno de la Base de Datos</h2>
+  <p>La base de datos SQLite <code>biblioteca.db</code> se crea automaticamente al iniciar la aplicacion y se ubica en <code>%LOCALAPPDATA%\UMG\PrestamosBiblioteca\</code>. El esquema se compone de tres tablas.</p>
+
+  <table class="data">
+    <tr><th>Tabla</th><th>Campos principales</th><th>Clave / Restricciones</th></tr>
+    <tr><td><b>Lectores</b></td><td>Id, Codigo, Nombre, Correo, Telefono</td><td>Clave primaria Id; Codigo y Correo unicos.</td></tr>
+    <tr><td><b>Libros</b></td><td>Id, Codigo, Titulo, Autor, Ejemplares</td><td>Clave primaria Id; Codigo unico; Ejemplares &gt;= 0.</td></tr>
+    <tr><td><b>Prestamos</b></td><td>Id, LectorId, LibroId, FechaPrestamo, FechaLimite, FechaDevolucion</td><td>Claves foraneas a Lectores y Libros; validacion de fechas; borrado en cascada.</td></tr>
+  </table>
+
+  <h4>Relaciones</h4>
+  <ul>
+    <li><b>Lector 1 --- N Prestamo:</b> un lector puede tener varios prestamos.</li>
+    <li><b>Libro 1 --- N Prestamo:</b> un libro puede registrarse en varios prestamos a lo largo del tiempo.</li>
+    <li>Los ejemplares <b>disponibles</b> de un libro equivalen a sus <code>Ejemplares</code> totales menos los prestamos activos (sin fecha de devolucion).</li>
+  </ul>
+
+  <div class="note">La opcion <b>ON DELETE CASCADE</b> elimina automaticamente los prestamos asociados cuando se borra un lector o un libro, preservando la integridad referencial. Las consultas usan parametros (<code>$nombre</code>) para evitar la inyeccion SQL.</div>
+</section>
+
+<section>
+  <h2>5. Reglas de Negocio y Flujo</h2>
+  <ul>
+    <li>No se registra un prestamo si el libro no tiene ejemplares disponibles.</li>
+    <li>La fecha limite no puede ser anterior a la fecha del prestamo.</li>
+    <li>La devolucion no puede ser anterior a la fecha del prestamo.</li>
+    <li>Un ejemplar vuelve a estar disponible al registrar su devolucion.</li>
+    <li>Los ejemplares de un libro no pueden reducirse por debajo de los prestamos activos.</li>
+    <li>El estado del prestamo se determina como <code>Devuelto</code>, <code>Vencido</code> o <code>Prestado</code>.</li>
+  </ul>
+  <h4>Flujo principal</h4>
+  <p>Registrar lector y libro &rarr; crear prestamo (valida disponibilidad) &rarr; consultar prestamos &rarr; registrar devolucion (libera el ejemplar) &rarr; consultar disponibilidad. Todo error se captura con <code>try-catch</code> y se informa al usuario.</p>
+</section>
+
+<section>
+  <h2>6. Verificacion Realizada</h2>
+  <ul>
+    <li>Compilacion con <code>dotnet build</code>: 0 advertencias y 0 errores.</li>
+    <li>Restauracion automatica de <code>Microsoft.Data.Sqlite</code> desde NuGet al ejecutar <code>dotnet restore</code>.</li>
+    <li>Pruebas de CRUD de lectores, libros y prestamos.</li>
+    <li>Rechazo controlado del prestamo cuando no hay ejemplares disponibles.</li>
+    <li>Registro de devolucion y liberacion del ejemplar (estado <code>Devuelto</code>).</li>
+    <li>Actualizaciones y eliminaciones con integridad referencial.</li>
+    <li>Demostracion de herencia y polimorfismo mediante <code>Persona = new Lector(...)</code>.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>7. Indice de Codigo Fuente</h2>
+  <p>Cada archivo se presenta a continuacion numerado y con la totalidad de su contenido. Se incluyen los archivos de configuracion, las clases de dominio, la capa de persistencia, la capa de aplicacion, el script SQL y la documentacion.</p>
+  <ul class="toc">
+<li><span class="toc-num">1.</span> <span class="toc-name">PrestamosBiblioteca.csproj</span> <span class="toc-layer">[Configuracion del proyecto]</span></li>
+<li><span class="toc-num">2.</span> <span class="toc-name">Program.cs</span> <span class="toc-layer">[Punto de entrada]</span></li>
+<li><span class="toc-num">3.</span> <span class="toc-name">Dominio/Persona.cs</span> <span class="toc-layer">[Dominio (POO)]</span></li>
+<li><span class="toc-num">4.</span> <span class="toc-name">Dominio/Lector.cs</span> <span class="toc-layer">[Dominio (POO)]</span></li>
+<li><span class="toc-num">5.</span> <span class="toc-name">Dominio/Libro.cs</span> <span class="toc-layer">[Dominio (POO)]</span></li>
+<li><span class="toc-num">6.</span> <span class="toc-name">Dominio/Prestamo.cs</span> <span class="toc-layer">[Dominio (POO)]</span></li>
+<li><span class="toc-num">7.</span> <span class="toc-name">Persistencia/InicializadorBaseDatos.cs</span> <span class="toc-layer">[Persistencia (SQLite)]</span></li>
+<li><span class="toc-num">8.</span> <span class="toc-name">Persistencia/RepositorioBiblioteca.cs</span> <span class="toc-layer">[Persistencia (SQLite)]</span></li>
+<li><span class="toc-num">9.</span> <span class="toc-name">Aplicacion/MenuBiblioteca.cs</span> <span class="toc-layer">[Aplicacion (consola)]</span></li>
+<li><span class="toc-num">10.</span> <span class="toc-name">BaseDatos/crear_tablas.sql</span> <span class="toc-layer">[Base de datos]</span></li>
+<li><span class="toc-num">11.</span> <span class="toc-name">README.md</span> <span class="toc-layer">[Documentacion]</span></li>
+  </ul>
+</section>
+
+<section>
+  <h2>8. Codigo Fuente Completo</h2>
+  <p>Las secciones siguientes contienen el codigo fuente integro del proyecto, organizado en el mismo orden del indice.</p>
+</section>
+
+<section class="file" id="archivo-1">
+  <div class="file-head">
+    <span class="file-num">Archivo 1 de 11</span>
+    <h3>PrestamosBiblioteca.csproj</h3>
+    <span class="file-layer">Configuracion del proyecto</span>
+  </div>
+  <p class="file-desc">Proyecto .NET 6 de consola. Declara el paquete NuGet Microsoft.Data.Sqlite 6.0.36 (que aporta el proveedor SQLite y sus dependencias) y embebe el script de tablas como recurso.</p>
+  <div class="code"><div class="line"><span class="ln">1</span><span class="lc">&lt;Project Sdk="Microsoft.NET.Sdk"&gt;</span></div>
+<div class="line"><span class="ln">2</span><span class="lc">  &lt;PropertyGroup&gt;</span></div>
+<div class="line"><span class="ln">3</span><span class="lc">    &lt;OutputType&gt;Exe&lt;/OutputType&gt;</span></div>
+<div class="line"><span class="ln">4</span><span class="lc">    &lt;TargetFramework&gt;net6.0&lt;/TargetFramework&gt;</span></div>
+<div class="line"><span class="ln">5</span><span class="lc">    &lt;ImplicitUsings&gt;enable&lt;/ImplicitUsings&gt;</span></div>
+<div class="line"><span class="ln">6</span><span class="lc">    &lt;Nullable&gt;disable&lt;/Nullable&gt;</span></div>
+<div class="line"><span class="ln">7</span><span class="lc">  &lt;/PropertyGroup&gt;</span></div>
+<div class="line"><span class="ln">8</span><span class="lc"></span></div>
+<div class="line"><span class="ln">9</span><span class="lc">  &lt;ItemGroup&gt;</span></div>
+<div class="line"><span class="ln">10</span><span class="lc">    &lt;PackageReference Include="Microsoft.Data.Sqlite" Version="6.0.36" /&gt;</span></div>
+<div class="line"><span class="ln">11</span><span class="lc">    &lt;EmbeddedResource Include="BaseDatos\crear_tablas.sql" /&gt;</span></div>
+<div class="line"><span class="ln">12</span><span class="lc">  &lt;/ItemGroup&gt;</span></div>
+<div class="line"><span class="ln">13</span><span class="lc">&lt;/Project&gt;</span></div></div>
+</section>
+<section class="file" id="archivo-2">
+  <div class="file-head">
+    <span class="file-num">Archivo 2 de 11</span>
+    <h3>Program.cs</h3>
+    <span class="file-layer">Punto de entrada</span>
+  </div>
+  <p class="file-desc">Inicia la aplicacion: crea la base de datos, construye el repositorio y arranca el menu. Envuelve el arranque en try-catch.</p>
+  <div class="code"><div class="line"><span class="ln">1</span><span class="lc">using PrestamosBiblioteca.Aplicacion;</span></div>
+<div class="line"><span class="ln">2</span><span class="lc">using PrestamosBiblioteca.Persistencia;</span></div>
+<div class="line"><span class="ln">3</span><span class="lc"></span></div>
+<div class="line"><span class="ln">4</span><span class="lc">namespace PrestamosBiblioteca;</span></div>
+<div class="line"><span class="ln">5</span><span class="lc"></span></div>
+<div class="line"><span class="ln">6</span><span class="lc">internal static class Program</span></div>
+<div class="line"><span class="ln">7</span><span class="lc">{</span></div>
+<div class="line"><span class="ln">8</span><span class="lc">    private static void Main()</span></div>
+<div class="line"><span class="ln">9</span><span class="lc">    {</span></div>
+<div class="line"><span class="ln">10</span><span class="lc">        try</span></div>
+<div class="line"><span class="ln">11</span><span class="lc">        {</span></div>
+<div class="line"><span class="ln">12</span><span class="lc">            var inicializador = new InicializadorBaseDatos();</span></div>
+<div class="line"><span class="ln">13</span><span class="lc">            inicializador.Inicializar();</span></div>
+<div class="line"><span class="ln">14</span><span class="lc">            var repositorio = new RepositorioBiblioteca(inicializador.CadenaConexion);</span></div>
+<div class="line"><span class="ln">15</span><span class="lc">            new MenuBiblioteca(repositorio).Ejecutar();</span></div>
+<div class="line"><span class="ln">16</span><span class="lc">        }</span></div>
+<div class="line"><span class="ln">17</span><span class="lc">        catch (Exception error)</span></div>
+<div class="line"><span class="ln">18</span><span class="lc">        {</span></div>
+<div class="line"><span class="ln">19</span><span class="lc">            Console.ForegroundColor = ConsoleColor.Red;</span></div>
+<div class="line"><span class="ln">20</span><span class="lc">            Console.WriteLine($"No fue posible iniciar el sistema: {error.Message}");</span></div>
+<div class="line"><span class="ln">21</span><span class="lc">            Console.ResetColor();</span></div>
+<div class="line"><span class="ln">22</span><span class="lc">        }</span></div>
+<div class="line"><span class="ln">23</span><span class="lc">    }</span></div>
+<div class="line"><span class="ln">24</span><span class="lc">}</span></div></div>
+</section>
+<section class="file" id="archivo-3">
+  <div class="file-head">
+    <span class="file-num">Archivo 3 de 11</span>
+    <h3>Dominio/Persona.cs</h3>
+    <span class="file-layer">Dominio (POO)</span>
+  </div>
+  <p class="file-desc">Clase abstracta base con codigo, nombre y correo. Define el metodo abstracto ObtenerTipo y la validacion de texto comun.</p>
+  <div class="code"><div class="line"><span class="ln">1</span><span class="lc">namespace PrestamosBiblioteca.Dominio;</span></div>
+<div class="line"><span class="ln">2</span><span class="lc"></span></div>
+<div class="line"><span class="ln">3</span><span class="lc">public abstract class Persona</span></div>
+<div class="line"><span class="ln">4</span><span class="lc">{</span></div>
+<div class="line"><span class="ln">5</span><span class="lc">    protected Persona(string codigo, string nombre, string correo)</span></div>
+<div class="line"><span class="ln">6</span><span class="lc">    {</span></div>
+<div class="line"><span class="ln">7</span><span class="lc">        Codigo = ValidarTexto(codigo, "El codigo del lector es obligatorio.");</span></div>
+<div class="line"><span class="ln">8</span><span class="lc">        Nombre = ValidarTexto(nombre, "El nombre es obligatorio.");</span></div>
+<div class="line"><span class="ln">9</span><span class="lc">        Correo = ValidarTexto(correo, "El correo es obligatorio.");</span></div>
+<div class="line"><span class="ln">10</span><span class="lc">    }</span></div>
+<div class="line"><span class="ln">11</span><span class="lc"></span></div>
+<div class="line"><span class="ln">12</span><span class="lc">    public string Codigo { get; }</span></div>
+<div class="line"><span class="ln">13</span><span class="lc">    public string Nombre { get; }</span></div>
+<div class="line"><span class="ln">14</span><span class="lc">    public string Correo { get; }</span></div>
+<div class="line"><span class="ln">15</span><span class="lc"></span></div>
+<div class="line"><span class="ln">16</span><span class="lc">    public abstract string ObtenerTipo();</span></div>
+<div class="line"><span class="ln">17</span><span class="lc">    public virtual string ObtenerInformacion() =&gt; $"{ObtenerTipo()}: {Codigo} - {Nombre} | {Correo}";</span></div>
+<div class="line"><span class="ln">18</span><span class="lc"></span></div>
+<div class="line"><span class="ln">19</span><span class="lc">    protected static string ValidarTexto(string valor, string mensaje) =&gt;</span></div>
+<div class="line"><span class="ln">20</span><span class="lc">        string.IsNullOrWhiteSpace(valor) ? throw new ArgumentException(mensaje) : valor.Trim();</span></div>
+<div class="line"><span class="ln">21</span><span class="lc">}</span></div></div>
+</section>
+<section class="file" id="archivo-4">
+  <div class="file-head">
+    <span class="file-num">Archivo 4 de 11</span>
+    <h3>Dominio/Lector.cs</h3>
+    <span class="file-layer">Dominio (POO)</span>
+  </div>
+  <p class="file-desc">Hereda de Persona. Agrega el telefono y sobrescribe ObtenerInformacion para demostrar herencia y polimorfismo.</p>
+  <div class="code"><div class="line"><span class="ln">1</span><span class="lc">namespace PrestamosBiblioteca.Dominio;</span></div>
+<div class="line"><span class="ln">2</span><span class="lc"></span></div>
+<div class="line"><span class="ln">3</span><span class="lc">public sealed class Lector : Persona</span></div>
+<div class="line"><span class="ln">4</span><span class="lc">{</span></div>
+<div class="line"><span class="ln">5</span><span class="lc">    public Lector(string codigo, string nombre, string correo, string telefono)</span></div>
+<div class="line"><span class="ln">6</span><span class="lc">        : base(codigo, nombre, correo)</span></div>
+<div class="line"><span class="ln">7</span><span class="lc">    {</span></div>
+<div class="line"><span class="ln">8</span><span class="lc">        Telefono = string.IsNullOrWhiteSpace(telefono)</span></div>
+<div class="line"><span class="ln">9</span><span class="lc">            ? throw new ArgumentException("El telefono es obligatorio.")</span></div>
+<div class="line"><span class="ln">10</span><span class="lc">            : telefono.Trim();</span></div>
+<div class="line"><span class="ln">11</span><span class="lc">    }</span></div>
+<div class="line"><span class="ln">12</span><span class="lc"></span></div>
+<div class="line"><span class="ln">13</span><span class="lc">    public string Telefono { get; }</span></div>
+<div class="line"><span class="ln">14</span><span class="lc">    public override string ObtenerTipo() =&gt; "Lector";</span></div>
+<div class="line"><span class="ln">15</span><span class="lc"></span></div>
+<div class="line"><span class="ln">16</span><span class="lc">    public override string ObtenerInformacion() =&gt; $"{base.ObtenerInformacion()} | Tel: {Telefono}";</span></div>
+<div class="line"><span class="ln">17</span><span class="lc">}</span></div></div>
+</section>
+<section class="file" id="archivo-5">
+  <div class="file-head">
+    <span class="file-num">Archivo 5 de 11</span>
+    <h3>Dominio/Libro.cs</h3>
+    <span class="file-layer">Dominio (POO)</span>
+  </div>
+  <p class="file-desc">Entidad del catalogo: codigo, titulo, autor y cantidad de ejemplares. Encapsula y valida sus datos.</p>
+  <div class="code"><div class="line"><span class="ln">1</span><span class="lc">namespace PrestamosBiblioteca.Dominio;</span></div>
+<div class="line"><span class="ln">2</span><span class="lc"></span></div>
+<div class="line"><span class="ln">3</span><span class="lc">public sealed class Libro</span></div>
+<div class="line"><span class="ln">4</span><span class="lc">{</span></div>
+<div class="line"><span class="ln">5</span><span class="lc">    public Libro(string codigo, string titulo, string autor, int ejemplares)</span></div>
+<div class="line"><span class="ln">6</span><span class="lc">    {</span></div>
+<div class="line"><span class="ln">7</span><span class="lc">        Codigo = string.IsNullOrWhiteSpace(codigo) ? throw new ArgumentException("El codigo del libro es obligatorio.") : codigo.Trim();</span></div>
+<div class="line"><span class="ln">8</span><span class="lc">        Titulo = string.IsNullOrWhiteSpace(titulo) ? throw new ArgumentException("El titulo es obligatorio.") : titulo.Trim();</span></div>
+<div class="line"><span class="ln">9</span><span class="lc">        Autor = string.IsNullOrWhiteSpace(autor) ? throw new ArgumentException("El autor es obligatorio.") : autor.Trim();</span></div>
+<div class="line"><span class="ln">10</span><span class="lc">        if (ejemplares &lt; 0) throw new ArgumentException("La cantidad de ejemplares no puede ser negativa.");</span></div>
+<div class="line"><span class="ln">11</span><span class="lc">        Ejemplares = ejemplares;</span></div>
+<div class="line"><span class="ln">12</span><span class="lc">    }</span></div>
+<div class="line"><span class="ln">13</span><span class="lc"></span></div>
+<div class="line"><span class="ln">14</span><span class="lc">    public string Codigo { get; }</span></div>
+<div class="line"><span class="ln">15</span><span class="lc">    public string Titulo { get; }</span></div>
+<div class="line"><span class="ln">16</span><span class="lc">    public string Autor { get; }</span></div>
+<div class="line"><span class="ln">17</span><span class="lc">    public int Ejemplares { get; }</span></div>
+<div class="line"><span class="ln">18</span><span class="lc">}</span></div></div>
+</section>
+<section class="file" id="archivo-6">
+  <div class="file-head">
+    <span class="file-num">Archivo 6 de 11</span>
+    <h3>Dominio/Prestamo.cs</h3>
+    <span class="file-layer">Dominio (POO)</span>
+  </div>
+  <p class="file-desc">Representa la relacion lector-libro con fechas. Valida que las fechas sean coherentes y expone el estado del prestamo.</p>
+  <div class="code"><div class="line"><span class="ln">1</span><span class="lc">namespace PrestamosBiblioteca.Dominio;</span></div>
+<div class="line"><span class="ln">2</span><span class="lc"></span></div>
+<div class="line"><span class="ln">3</span><span class="lc">public sealed class Prestamo</span></div>
+<div class="line"><span class="ln">4</span><span class="lc">{</span></div>
+<div class="line"><span class="ln">5</span><span class="lc">    public Prestamo(int lectorId, int libroId, DateTime fechaPrestamo, DateTime fechaLimite, DateTime? fechaDevolucion = null)</span></div>
+<div class="line"><span class="ln">6</span><span class="lc">    {</span></div>
+<div class="line"><span class="ln">7</span><span class="lc">        if (lectorId &lt;= 0) throw new ArgumentException("Debe seleccionar un lector.");</span></div>
+<div class="line"><span class="ln">8</span><span class="lc">        if (libroId &lt;= 0) throw new ArgumentException("Debe seleccionar un libro.");</span></div>
+<div class="line"><span class="ln">9</span><span class="lc">        if (fechaLimite.Date &lt; fechaPrestamo.Date) throw new ArgumentException("La fecha limite no puede ser anterior al prestamo.");</span></div>
+<div class="line"><span class="ln">10</span><span class="lc">        if (fechaDevolucion.HasValue &amp;&amp; fechaDevolucion.Value.Date &lt; fechaPrestamo.Date)</span></div>
+<div class="line"><span class="ln">11</span><span class="lc">            throw new ArgumentException("La devolucion no puede ser anterior al prestamo.");</span></div>
+<div class="line"><span class="ln">12</span><span class="lc"></span></div>
+<div class="line"><span class="ln">13</span><span class="lc">        LectorId = lectorId;</span></div>
+<div class="line"><span class="ln">14</span><span class="lc">        LibroId = libroId;</span></div>
+<div class="line"><span class="ln">15</span><span class="lc">        FechaPrestamo = fechaPrestamo;</span></div>
+<div class="line"><span class="ln">16</span><span class="lc">        FechaLimite = fechaLimite;</span></div>
+<div class="line"><span class="ln">17</span><span class="lc">        FechaDevolucion = fechaDevolucion;</span></div>
+<div class="line"><span class="ln">18</span><span class="lc">    }</span></div>
+<div class="line"><span class="ln">19</span><span class="lc"></span></div>
+<div class="line"><span class="ln">20</span><span class="lc">    public int Id { get; set; }</span></div>
+<div class="line"><span class="ln">21</span><span class="lc">    public int LectorId { get; }</span></div>
+<div class="line"><span class="ln">22</span><span class="lc">    public int LibroId { get; }</span></div>
+<div class="line"><span class="ln">23</span><span class="lc">    public DateTime FechaPrestamo { get; }</span></div>
+<div class="line"><span class="ln">24</span><span class="lc">    public DateTime FechaLimite { get; }</span></div>
+<div class="line"><span class="ln">25</span><span class="lc">    public DateTime? FechaDevolucion { get; }</span></div>
+<div class="line"><span class="ln">26</span><span class="lc">    public bool EstaActivo =&gt; !FechaDevolucion.HasValue;</span></div>
+<div class="line"><span class="ln">27</span><span class="lc">    public bool EstaVencido(DateTime hoy) =&gt; EstaActivo &amp;&amp; FechaLimite.Date &lt; hoy.Date;</span></div>
+<div class="line"><span class="ln">28</span><span class="lc">}</span></div></div>
+</section>
+<section class="file" id="archivo-7">
+  <div class="file-head">
+    <span class="file-num">Archivo 7 de 11</span>
+    <h3>Persistencia/InicializadorBaseDatos.cs</h3>
+    <span class="file-layer">Persistencia (SQLite)</span>
+  </div>
+  <p class="file-desc">Determina la ubicacion del archivo .db, abre la conexion con claves foraneas activas y ejecuta el script SQL de creacion de tablas.</p>
+  <div class="code"><div class="line"><span class="ln">1</span><span class="lc">using System.Reflection;</span></div>
+<div class="line"><span class="ln">2</span><span class="lc">using Microsoft.Data.Sqlite;</span></div>
+<div class="line"><span class="ln">3</span><span class="lc"></span></div>
+<div class="line"><span class="ln">4</span><span class="lc">namespace PrestamosBiblioteca.Persistencia;</span></div>
+<div class="line"><span class="ln">5</span><span class="lc"></span></div>
+<div class="line"><span class="ln">6</span><span class="lc">internal sealed class InicializadorBaseDatos</span></div>
+<div class="line"><span class="ln">7</span><span class="lc">{</span></div>
+<div class="line"><span class="ln">8</span><span class="lc">    public string RutaBaseDatos { get; } = Environment.GetEnvironmentVariable("PRESTAMOS_BIBLIOTECA_DB")</span></div>
+<div class="line"><span class="ln">9</span><span class="lc">        ?? Path.Combine(</span></div>
+<div class="line"><span class="ln">10</span><span class="lc">            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),</span></div>
+<div class="line"><span class="ln">11</span><span class="lc">            "UMG",</span></div>
+<div class="line"><span class="ln">12</span><span class="lc">            "PrestamosBiblioteca",</span></div>
+<div class="line"><span class="ln">13</span><span class="lc">            "biblioteca.db");</span></div>
+<div class="line"><span class="ln">14</span><span class="lc"></span></div>
+<div class="line"><span class="ln">15</span><span class="lc">    public string CadenaConexion =&gt; new SqliteConnectionStringBuilder</span></div>
+<div class="line"><span class="ln">16</span><span class="lc">    {</span></div>
+<div class="line"><span class="ln">17</span><span class="lc">        DataSource = RutaBaseDatos,</span></div>
+<div class="line"><span class="ln">18</span><span class="lc">        ForeignKeys = true</span></div>
+<div class="line"><span class="ln">19</span><span class="lc">    }.ToString();</span></div>
+<div class="line"><span class="ln">20</span><span class="lc"></span></div>
+<div class="line"><span class="ln">21</span><span class="lc">    public void Inicializar()</span></div>
+<div class="line"><span class="ln">22</span><span class="lc">    {</span></div>
+<div class="line"><span class="ln">23</span><span class="lc">        var directorio = Path.GetDirectoryName(RutaBaseDatos);</span></div>
+<div class="line"><span class="ln">24</span><span class="lc">        if (!string.IsNullOrEmpty(directorio)) Directory.CreateDirectory(directorio);</span></div>
+<div class="line"><span class="ln">25</span><span class="lc">        using var conexion = new SqliteConnection(CadenaConexion);</span></div>
+<div class="line"><span class="ln">26</span><span class="lc">        conexion.Open();</span></div>
+<div class="line"><span class="ln">27</span><span class="lc">        using var comando = conexion.CreateCommand();</span></div>
+<div class="line"><span class="ln">28</span><span class="lc">        comando.CommandText = LeerScriptTablas();</span></div>
+<div class="line"><span class="ln">29</span><span class="lc">        comando.ExecuteNonQuery();</span></div>
+<div class="line"><span class="ln">30</span><span class="lc">    }</span></div>
+<div class="line"><span class="ln">31</span><span class="lc"></span></div>
+<div class="line"><span class="ln">32</span><span class="lc">    private static string LeerScriptTablas()</span></div>
+<div class="line"><span class="ln">33</span><span class="lc">    {</span></div>
+<div class="line"><span class="ln">34</span><span class="lc">        var ensamblado = Assembly.GetExecutingAssembly();</span></div>
+<div class="line"><span class="ln">35</span><span class="lc">        var recurso = ensamblado.GetManifestResourceNames()</span></div>
+<div class="line"><span class="ln">36</span><span class="lc">            .Single(nombre =&gt; nombre.EndsWith("crear_tablas.sql", StringComparison.OrdinalIgnoreCase));</span></div>
+<div class="line"><span class="ln">37</span><span class="lc">        using var stream = ensamblado.GetManifestResourceStream(recurso)</span></div>
+<div class="line"><span class="ln">38</span><span class="lc">            ?? throw new InvalidOperationException("No se encontro el script SQL de las tablas.");</span></div>
+<div class="line"><span class="ln">39</span><span class="lc">        using var lector = new StreamReader(stream);</span></div>
+<div class="line"><span class="ln">40</span><span class="lc">        return lector.ReadToEnd();</span></div>
+<div class="line"><span class="ln">41</span><span class="lc">    }</span></div>
+<div class="line"><span class="ln">42</span><span class="lc">}</span></div></div>
+</section>
+<section class="file" id="archivo-8">
+  <div class="file-head">
+    <span class="file-num">Archivo 8 de 11</span>
+    <h3>Persistencia/RepositorioBiblioteca.cs</h3>
+    <span class="file-layer">Persistencia (SQLite)</span>
+  </div>
+  <p class="file-desc">Contiene las operaciones CRUD de lectores, libros y prestamos, la validacion de disponibilidad, el registro de devoluciones y el uso de transacciones. Todas las consultas usan parametros.</p>
+  <div class="code"><div class="line"><span class="ln">1</span><span class="lc">using System.Data;</span></div>
+<div class="line"><span class="ln">2</span><span class="lc">using Microsoft.Data.Sqlite;</span></div>
+<div class="line"><span class="ln">3</span><span class="lc">using PrestamosBiblioteca.Dominio;</span></div>
+<div class="line"><span class="ln">4</span><span class="lc"></span></div>
+<div class="line"><span class="ln">5</span><span class="lc">namespace PrestamosBiblioteca.Persistencia;</span></div>
+<div class="line"><span class="ln">6</span><span class="lc"></span></div>
+<div class="line"><span class="ln">7</span><span class="lc">internal sealed class RepositorioBiblioteca</span></div>
+<div class="line"><span class="ln">8</span><span class="lc">{</span></div>
+<div class="line"><span class="ln">9</span><span class="lc">    private readonly string _cadenaConexion;</span></div>
+<div class="line"><span class="ln">10</span><span class="lc"></span></div>
+<div class="line"><span class="ln">11</span><span class="lc">    public RepositorioBiblioteca(string cadenaConexion) =&gt; _cadenaConexion = cadenaConexion;</span></div>
+<div class="line"><span class="ln">12</span><span class="lc"></span></div>
+<div class="line"><span class="ln">13</span><span class="lc">    <span class="cm">// CRUD de lectores</span></span></div>
+<div class="line"><span class="ln">14</span><span class="lc">    public DataTable ObtenerLectores() =&gt; Consultar(</span></div>
+<div class="line"><span class="ln">15</span><span class="lc">        "SELECT Id, Codigo, Nombre, Correo, Telefono FROM Lectores ORDER BY Nombre;");</span></div>
+<div class="line"><span class="ln">16</span><span class="lc"></span></div>
+<div class="line"><span class="ln">17</span><span class="lc">    public void CrearLector(Lector lector) =&gt; Ejecutar(</span></div>
+<div class="line"><span class="ln">18</span><span class="lc">        "INSERT INTO Lectores (Codigo, Nombre, Correo, Telefono) VALUES ($codigo, $nombre, $correo, $telefono);",</span></div>
+<div class="line"><span class="ln">19</span><span class="lc">        ("$codigo", lector.Codigo), ("$nombre", lector.Nombre),</span></div>
+<div class="line"><span class="ln">20</span><span class="lc">        ("$correo", lector.Correo), ("$telefono", lector.Telefono));</span></div>
+<div class="line"><span class="ln">21</span><span class="lc"></span></div>
+<div class="line"><span class="ln">22</span><span class="lc">    public void ActualizarLector(int id, Lector lector) =&gt; Ejecutar(</span></div>
+<div class="line"><span class="ln">23</span><span class="lc">        "UPDATE Lectores SET Codigo = $codigo, Nombre = $nombre, Correo = $correo, Telefono = $telefono WHERE Id = $id;",</span></div>
+<div class="line"><span class="ln">24</span><span class="lc">        ("$codigo", lector.Codigo), ("$nombre", lector.Nombre), ("$correo", lector.Correo),</span></div>
+<div class="line"><span class="ln">25</span><span class="lc">        ("$telefono", lector.Telefono), ("$id", id));</span></div>
+<div class="line"><span class="ln">26</span><span class="lc"></span></div>
+<div class="line"><span class="ln">27</span><span class="lc">    public void EliminarLector(int id) =&gt; Ejecutar("DELETE FROM Lectores WHERE Id = $id;", ("$id", id));</span></div>
+<div class="line"><span class="ln">28</span><span class="lc"></span></div>
+<div class="line"><span class="ln">29</span><span class="lc">    <span class="cm">// CRUD de libros</span></span></div>
+<div class="line"><span class="ln">30</span><span class="lc">    public DataTable ObtenerLibros() =&gt; Consultar(@"SELECT l.Id, l.Codigo, l.Titulo, l.Autor, l.Ejemplares,</span></div>
+<div class="line"><span class="ln">31</span><span class="lc">        l.Ejemplares - (SELECT COUNT(*) FROM Prestamos p WHERE p.LibroId = l.Id AND p.FechaDevolucion IS NULL) AS Disponibles</span></div>
+<div class="line"><span class="ln">32</span><span class="lc">        FROM Libros l ORDER BY l.Titulo;");</span></div>
+<div class="line"><span class="ln">33</span><span class="lc"></span></div>
+<div class="line"><span class="ln">34</span><span class="lc">    public void CrearLibro(Libro libro) =&gt; Ejecutar(</span></div>
+<div class="line"><span class="ln">35</span><span class="lc">        "INSERT INTO Libros (Codigo, Titulo, Autor, Ejemplares) VALUES ($codigo, $titulo, $autor, $ejemplares);",</span></div>
+<div class="line"><span class="ln">36</span><span class="lc">        ("$codigo", libro.Codigo), ("$titulo", libro.Titulo),</span></div>
+<div class="line"><span class="ln">37</span><span class="lc">        ("$autor", libro.Autor), ("$ejemplares", libro.Ejemplares));</span></div>
+<div class="line"><span class="ln">38</span><span class="lc"></span></div>
+<div class="line"><span class="ln">39</span><span class="lc">    public void ActualizarLibro(int id, Libro libro)</span></div>
+<div class="line"><span class="ln">40</span><span class="lc">    {</span></div>
+<div class="line"><span class="ln">41</span><span class="lc">        using var conexion = AbrirConexion();</span></div>
+<div class="line"><span class="ln">42</span><span class="lc">        using var comando = conexion.CreateCommand();</span></div>
+<div class="line"><span class="ln">43</span><span class="lc">        comando.CommandText = @"UPDATE Libros SET Codigo = $codigo, Titulo = $titulo, Autor = $autor, Ejemplares = $ejemplares</span></div>
+<div class="line"><span class="ln">44</span><span class="lc">            WHERE Id = $id AND $ejemplares &gt;= (SELECT COUNT(*) FROM Prestamos WHERE LibroId = $id AND FechaDevolucion IS NULL);";</span></div>
+<div class="line"><span class="ln">45</span><span class="lc">        comando.Parameters.AddWithValue("$codigo", libro.Codigo);</span></div>
+<div class="line"><span class="ln">46</span><span class="lc">        comando.Parameters.AddWithValue("$titulo", libro.Titulo);</span></div>
+<div class="line"><span class="ln">47</span><span class="lc">        comando.Parameters.AddWithValue("$autor", libro.Autor);</span></div>
+<div class="line"><span class="ln">48</span><span class="lc">        comando.Parameters.AddWithValue("$ejemplares", libro.Ejemplares);</span></div>
+<div class="line"><span class="ln">49</span><span class="lc">        comando.Parameters.AddWithValue("$id", id);</span></div>
+<div class="line"><span class="ln">50</span><span class="lc">        if (comando.ExecuteNonQuery() == 0)</span></div>
+<div class="line"><span class="ln">51</span><span class="lc">            throw new InvalidOperationException("No existe el libro o los ejemplares no pueden ser menos que los prestamos activos.");</span></div>
+<div class="line"><span class="ln">52</span><span class="lc">    }</span></div>
+<div class="line"><span class="ln">53</span><span class="lc"></span></div>
+<div class="line"><span class="ln">54</span><span class="lc">    public void EliminarLibro(int id) =&gt; Ejecutar("DELETE FROM Libros WHERE Id = $id;", ("$id", id));</span></div>
+<div class="line"><span class="ln">55</span><span class="lc"></span></div>
+<div class="line"><span class="ln">56</span><span class="lc">    <span class="cm">// CRUD y flujo de prÃ©stamos</span></span></div>
+<div class="line"><span class="ln">57</span><span class="lc">    public DataTable ObtenerPrestamos() =&gt; Consultar(@"SELECT p.Id, p.LectorId, p.LibroId,</span></div>
+<div class="line"><span class="ln">58</span><span class="lc">        l.Nombre AS Lector, b.Titulo AS Libro, p.FechaPrestamo, p.FechaLimite, p.FechaDevolucion,</span></div>
+<div class="line"><span class="ln">59</span><span class="lc">        CASE WHEN p.FechaDevolucion IS NOT NULL THEN 'Devuelto'</span></div>
+<div class="line"><span class="ln">60</span><span class="lc">             WHEN date(p.FechaLimite) &lt; date('now', 'localtime') THEN 'Vencido'</span></div>
+<div class="line"><span class="ln">61</span><span class="lc">             ELSE 'Prestado' END AS Estado</span></div>
+<div class="line"><span class="ln">62</span><span class="lc">        FROM Prestamos p</span></div>
+<div class="line"><span class="ln">63</span><span class="lc">        INNER JOIN Lectores l ON l.Id = p.LectorId</span></div>
+<div class="line"><span class="ln">64</span><span class="lc">        INNER JOIN Libros b ON b.Id = p.LibroId</span></div>
+<div class="line"><span class="ln">65</span><span class="lc">        ORDER BY p.FechaPrestamo DESC, p.Id DESC;");</span></div>
+<div class="line"><span class="ln">66</span><span class="lc"></span></div>
+<div class="line"><span class="ln">67</span><span class="lc">    public void CrearPrestamo(Prestamo prestamo)</span></div>
+<div class="line"><span class="ln">68</span><span class="lc">    {</span></div>
+<div class="line"><span class="ln">69</span><span class="lc">        using var conexion = AbrirConexion();</span></div>
+<div class="line"><span class="ln">70</span><span class="lc">        using var transaccion = conexion.BeginTransaction();</span></div>
+<div class="line"><span class="ln">71</span><span class="lc">        ValidarDisponibilidad(conexion, transaccion, prestamo.LibroId, null);</span></div>
+<div class="line"><span class="ln">72</span><span class="lc">        using var comando = conexion.CreateCommand();</span></div>
+<div class="line"><span class="ln">73</span><span class="lc">        comando.Transaction = transaccion;</span></div>
+<div class="line"><span class="ln">74</span><span class="lc">        comando.CommandText = "INSERT INTO Prestamos (LectorId, LibroId, FechaPrestamo, FechaLimite, FechaDevolucion) VALUES ($lector, $libro, $inicio, $limite, $devolucion);";</span></div>
+<div class="line"><span class="ln">75</span><span class="lc">        AgregarParametrosPrestamo(comando, prestamo);</span></div>
+<div class="line"><span class="ln">76</span><span class="lc">        comando.ExecuteNonQuery();</span></div>
+<div class="line"><span class="ln">77</span><span class="lc">        transaccion.Commit();</span></div>
+<div class="line"><span class="ln">78</span><span class="lc">    }</span></div>
+<div class="line"><span class="ln">79</span><span class="lc"></span></div>
+<div class="line"><span class="ln">80</span><span class="lc">    public void ActualizarPrestamo(int id, Prestamo prestamo)</span></div>
+<div class="line"><span class="ln">81</span><span class="lc">    {</span></div>
+<div class="line"><span class="ln">82</span><span class="lc">        using var conexion = AbrirConexion();</span></div>
+<div class="line"><span class="ln">83</span><span class="lc">        using var transaccion = conexion.BeginTransaction();</span></div>
+<div class="line"><span class="ln">84</span><span class="lc">        if (prestamo.EstaActivo) ValidarDisponibilidad(conexion, transaccion, prestamo.LibroId, id);</span></div>
+<div class="line"><span class="ln">85</span><span class="lc">        using var comando = conexion.CreateCommand();</span></div>
+<div class="line"><span class="ln">86</span><span class="lc">        comando.Transaction = transaccion;</span></div>
+<div class="line"><span class="ln">87</span><span class="lc">        comando.CommandText = @"UPDATE Prestamos SET LectorId = $lector, LibroId = $libro,</span></div>
+<div class="line"><span class="ln">88</span><span class="lc">            FechaPrestamo = $inicio, FechaLimite = $limite, FechaDevolucion = $devolucion WHERE Id = $id;";</span></div>
+<div class="line"><span class="ln">89</span><span class="lc">        AgregarParametrosPrestamo(comando, prestamo);</span></div>
+<div class="line"><span class="ln">90</span><span class="lc">        comando.Parameters.AddWithValue("$id", id);</span></div>
+<div class="line"><span class="ln">91</span><span class="lc">        if (comando.ExecuteNonQuery() == 0) throw new InvalidOperationException("No existe un prestamo con ese Id.");</span></div>
+<div class="line"><span class="ln">92</span><span class="lc">        transaccion.Commit();</span></div>
+<div class="line"><span class="ln">93</span><span class="lc">    }</span></div>
+<div class="line"><span class="ln">94</span><span class="lc"></span></div>
+<div class="line"><span class="ln">95</span><span class="lc">    public void RegistrarDevolucion(int id, DateTime fechaDevolucion)</span></div>
+<div class="line"><span class="ln">96</span><span class="lc">    {</span></div>
+<div class="line"><span class="ln">97</span><span class="lc">        using var conexion = AbrirConexion();</span></div>
+<div class="line"><span class="ln">98</span><span class="lc">        using var comando = conexion.CreateCommand();</span></div>
+<div class="line"><span class="ln">99</span><span class="lc">        comando.CommandText = @"UPDATE Prestamos SET FechaDevolucion = $fecha</span></div>
+<div class="line"><span class="ln">100</span><span class="lc">            WHERE Id = $id AND FechaDevolucion IS NULL AND date($fecha) &gt;= date(FechaPrestamo);";</span></div>
+<div class="line"><span class="ln">101</span><span class="lc">        comando.Parameters.AddWithValue("$fecha", fechaDevolucion.ToString("yyyy-MM-dd"));</span></div>
+<div class="line"><span class="ln">102</span><span class="lc">        comando.Parameters.AddWithValue("$id", id);</span></div>
+<div class="line"><span class="ln">103</span><span class="lc">        if (comando.ExecuteNonQuery() == 0)</span></div>
+<div class="line"><span class="ln">104</span><span class="lc">            throw new InvalidOperationException("El prestamo no existe, ya fue devuelto o la fecha no es valida.");</span></div>
+<div class="line"><span class="ln">105</span><span class="lc">    }</span></div>
+<div class="line"><span class="ln">106</span><span class="lc"></span></div>
+<div class="line"><span class="ln">107</span><span class="lc">    public void EliminarPrestamo(int id) =&gt; Ejecutar("DELETE FROM Prestamos WHERE Id = $id;", ("$id", id));</span></div>
+<div class="line"><span class="ln">108</span><span class="lc"></span></div>
+<div class="line"><span class="ln">109</span><span class="lc">    private static void ValidarDisponibilidad(SqliteConnection conexion, SqliteTransaction transaccion, int libroId, int? prestamoActualId)</span></div>
+<div class="line"><span class="ln">110</span><span class="lc">    {</span></div>
+<div class="line"><span class="ln">111</span><span class="lc">        using var comando = conexion.CreateCommand();</span></div>
+<div class="line"><span class="ln">112</span><span class="lc">        comando.Transaction = transaccion;</span></div>
+<div class="line"><span class="ln">113</span><span class="lc">        comando.CommandText = @"SELECT b.Ejemplares - (</span></div>
+<div class="line"><span class="ln">114</span><span class="lc">            SELECT COUNT(*) FROM Prestamos p WHERE p.LibroId = b.Id AND p.FechaDevolucion IS NULL</span></div>
+<div class="line"><span class="ln">115</span><span class="lc">            AND ($prestamoId IS NULL OR p.Id &lt;&gt; $prestamoId))</span></div>
+<div class="line"><span class="ln">116</span><span class="lc">            FROM Libros b WHERE b.Id = $libroId;";</span></div>
+<div class="line"><span class="ln">117</span><span class="lc">        comando.Parameters.AddWithValue("$libroId", libroId);</span></div>
+<div class="line"><span class="ln">118</span><span class="lc">        comando.Parameters.AddWithValue("$prestamoId", prestamoActualId.HasValue ? prestamoActualId.Value : DBNull.Value);</span></div>
+<div class="line"><span class="ln">119</span><span class="lc">        var disponibles = comando.ExecuteScalar();</span></div>
+<div class="line"><span class="ln">120</span><span class="lc">        if (disponibles is null || disponibles is DBNull)</span></div>
+<div class="line"><span class="ln">121</span><span class="lc">            throw new InvalidOperationException("El libro seleccionado no existe.");</span></div>
+<div class="line"><span class="ln">122</span><span class="lc">        if (Convert.ToInt32(disponibles) &lt;= 0)</span></div>
+<div class="line"><span class="ln">123</span><span class="lc">            throw new InvalidOperationException("No hay ejemplares disponibles de ese libro.");</span></div>
+<div class="line"><span class="ln">124</span><span class="lc">    }</span></div>
+<div class="line"><span class="ln">125</span><span class="lc"></span></div>
+<div class="line"><span class="ln">126</span><span class="lc">    private static void AgregarParametrosPrestamo(SqliteCommand comando, Prestamo prestamo)</span></div>
+<div class="line"><span class="ln">127</span><span class="lc">    {</span></div>
+<div class="line"><span class="ln">128</span><span class="lc">        comando.Parameters.AddWithValue("$lector", prestamo.LectorId);</span></div>
+<div class="line"><span class="ln">129</span><span class="lc">        comando.Parameters.AddWithValue("$libro", prestamo.LibroId);</span></div>
+<div class="line"><span class="ln">130</span><span class="lc">        comando.Parameters.AddWithValue("$inicio", prestamo.FechaPrestamo.ToString("yyyy-MM-dd"));</span></div>
+<div class="line"><span class="ln">131</span><span class="lc">        comando.Parameters.AddWithValue("$limite", prestamo.FechaLimite.ToString("yyyy-MM-dd"));</span></div>
+<div class="line"><span class="ln">132</span><span class="lc">        comando.Parameters.AddWithValue("$devolucion", prestamo.FechaDevolucion.HasValue</span></div>
+<div class="line"><span class="ln">133</span><span class="lc">            ? prestamo.FechaDevolucion.Value.ToString("yyyy-MM-dd")</span></div>
+<div class="line"><span class="ln">134</span><span class="lc">            : DBNull.Value);</span></div>
+<div class="line"><span class="ln">135</span><span class="lc">    }</span></div>
+<div class="line"><span class="ln">136</span><span class="lc"></span></div>
+<div class="line"><span class="ln">137</span><span class="lc">    private DataTable Consultar(string sql)</span></div>
+<div class="line"><span class="ln">138</span><span class="lc">    {</span></div>
+<div class="line"><span class="ln">139</span><span class="lc">        using var conexion = AbrirConexion();</span></div>
+<div class="line"><span class="ln">140</span><span class="lc">        using var comando = conexion.CreateCommand();</span></div>
+<div class="line"><span class="ln">141</span><span class="lc">        comando.CommandText = sql;</span></div>
+<div class="line"><span class="ln">142</span><span class="lc">        using var lector = comando.ExecuteReader();</span></div>
+<div class="line"><span class="ln">143</span><span class="lc">        var tabla = new DataTable();</span></div>
+<div class="line"><span class="ln">144</span><span class="lc">        tabla.Load(lector);</span></div>
+<div class="line"><span class="ln">145</span><span class="lc">        return tabla;</span></div>
+<div class="line"><span class="ln">146</span><span class="lc">    }</span></div>
+<div class="line"><span class="ln">147</span><span class="lc"></span></div>
+<div class="line"><span class="ln">148</span><span class="lc">    private void Ejecutar(string sql, params (string Nombre, object Valor)[] parametros)</span></div>
+<div class="line"><span class="ln">149</span><span class="lc">    {</span></div>
+<div class="line"><span class="ln">150</span><span class="lc">        using var conexion = AbrirConexion();</span></div>
+<div class="line"><span class="ln">151</span><span class="lc">        using var comando = conexion.CreateCommand();</span></div>
+<div class="line"><span class="ln">152</span><span class="lc">        comando.CommandText = sql;</span></div>
+<div class="line"><span class="ln">153</span><span class="lc">        foreach (var (nombre, valor) in parametros) comando.Parameters.AddWithValue(nombre, valor ?? DBNull.Value);</span></div>
+<div class="line"><span class="ln">154</span><span class="lc">        comando.ExecuteNonQuery();</span></div>
+<div class="line"><span class="ln">155</span><span class="lc">    }</span></div>
+<div class="line"><span class="ln">156</span><span class="lc"></span></div>
+<div class="line"><span class="ln">157</span><span class="lc">    private SqliteConnection AbrirConexion()</span></div>
+<div class="line"><span class="ln">158</span><span class="lc">    {</span></div>
+<div class="line"><span class="ln">159</span><span class="lc">        var conexion = new SqliteConnection(_cadenaConexion);</span></div>
+<div class="line"><span class="ln">160</span><span class="lc">        conexion.Open();</span></div>
+<div class="line"><span class="ln">161</span><span class="lc">        return conexion;</span></div>
+<div class="line"><span class="ln">162</span><span class="lc">    }</span></div>
+<div class="line"><span class="ln">163</span><span class="lc">}</span></div></div>
+</section>
+<section class="file" id="archivo-9">
+  <div class="file-head">
+    <span class="file-num">Archivo 9 de 11</span>
+    <h3>Aplicacion/MenuBiblioteca.cs</h3>
+    <span class="file-layer">Aplicacion (consola)</span>
+  </div>
+  <p class="file-desc">Menu interactivo: captura datos, invoca al repositorio, presenta tablas y controla errores con try-catch.</p>
+  <div class="code"><div class="line"><span class="ln">1</span><span class="lc">using System.Data;</span></div>
+<div class="line"><span class="ln">2</span><span class="lc">using PrestamosBiblioteca.Dominio;</span></div>
+<div class="line"><span class="ln">3</span><span class="lc">using PrestamosBiblioteca.Persistencia;</span></div>
+<div class="line"><span class="ln">4</span><span class="lc"></span></div>
+<div class="line"><span class="ln">5</span><span class="lc">namespace PrestamosBiblioteca.Aplicacion;</span></div>
+<div class="line"><span class="ln">6</span><span class="lc"></span></div>
+<div class="line"><span class="ln">7</span><span class="lc">internal sealed class MenuBiblioteca</span></div>
+<div class="line"><span class="ln">8</span><span class="lc">{</span></div>
+<div class="line"><span class="ln">9</span><span class="lc">    private readonly RepositorioBiblioteca _repositorio;</span></div>
+<div class="line"><span class="ln">10</span><span class="lc">    private bool _continuar = true;</span></div>
+<div class="line"><span class="ln">11</span><span class="lc"></span></div>
+<div class="line"><span class="ln">12</span><span class="lc">    public MenuBiblioteca(RepositorioBiblioteca repositorio) =&gt; _repositorio = repositorio;</span></div>
+<div class="line"><span class="ln">13</span><span class="lc"></span></div>
+<div class="line"><span class="ln">14</span><span class="lc">    public void Ejecutar()</span></div>
+<div class="line"><span class="ln">15</span><span class="lc">    {</span></div>
+<div class="line"><span class="ln">16</span><span class="lc">        while (_continuar)</span></div>
+<div class="line"><span class="ln">17</span><span class="lc">        {</span></div>
+<div class="line"><span class="ln">18</span><span class="lc">            MostrarMenu();</span></div>
+<div class="line"><span class="ln">19</span><span class="lc">            try</span></div>
+<div class="line"><span class="ln">20</span><span class="lc">            {</span></div>
+<div class="line"><span class="ln">21</span><span class="lc">                var entrada = Console.ReadLine();</span></div>
+<div class="line"><span class="ln">22</span><span class="lc">                if (entrada is null) break;</span></div>
+<div class="line"><span class="ln">23</span><span class="lc">                switch (entrada.Trim())</span></div>
+<div class="line"><span class="ln">24</span><span class="lc">                {</span></div>
+<div class="line"><span class="ln">25</span><span class="lc">                    case "1": CrearLector(); break;</span></div>
+<div class="line"><span class="ln">26</span><span class="lc">                    case "2": ListarLectores(); break;</span></div>
+<div class="line"><span class="ln">27</span><span class="lc">                    case "3": ActualizarLector(); break;</span></div>
+<div class="line"><span class="ln">28</span><span class="lc">                    case "4": EliminarLector(); break;</span></div>
+<div class="line"><span class="ln">29</span><span class="lc">                    case "5": CrearLibro(); break;</span></div>
+<div class="line"><span class="ln">30</span><span class="lc">                    case "6": ListarLibros(); break;</span></div>
+<div class="line"><span class="ln">31</span><span class="lc">                    case "7": ActualizarLibro(); break;</span></div>
+<div class="line"><span class="ln">32</span><span class="lc">                    case "8": EliminarLibro(); break;</span></div>
+<div class="line"><span class="ln">33</span><span class="lc">                    case "9": CrearPrestamo(); break;</span></div>
+<div class="line"><span class="ln">34</span><span class="lc">                    case "10": ListarPrestamos(); break;</span></div>
+<div class="line"><span class="ln">35</span><span class="lc">                    case "11": ActualizarPrestamo(); break;</span></div>
+<div class="line"><span class="ln">36</span><span class="lc">                    case "12": RegistrarDevolucion(); break;</span></div>
+<div class="line"><span class="ln">37</span><span class="lc">                    case "13": EliminarPrestamo(); break;</span></div>
+<div class="line"><span class="ln">38</span><span class="lc">                    case "14": DemostrarPolimorfismo(); break;</span></div>
+<div class="line"><span class="ln">39</span><span class="lc">                    case "0": _continuar = false; break;</span></div>
+<div class="line"><span class="ln">40</span><span class="lc">                    default: Console.WriteLine("Seleccione una opcion valida."); break;</span></div>
+<div class="line"><span class="ln">41</span><span class="lc">                }</span></div>
+<div class="line"><span class="ln">42</span><span class="lc">            }</span></div>
+<div class="line"><span class="ln">43</span><span class="lc">            catch (Exception error)</span></div>
+<div class="line"><span class="ln">44</span><span class="lc">            {</span></div>
+<div class="line"><span class="ln">45</span><span class="lc">                Console.ForegroundColor = ConsoleColor.Red;</span></div>
+<div class="line"><span class="ln">46</span><span class="lc">                Console.WriteLine($"Error controlado con try-catch: {error.Message}");</span></div>
+<div class="line"><span class="ln">47</span><span class="lc">                Console.ResetColor();</span></div>
+<div class="line"><span class="ln">48</span><span class="lc">            }</span></div>
+<div class="line"><span class="ln">49</span><span class="lc"></span></div>
+<div class="line"><span class="ln">50</span><span class="lc">            if (_continuar) Pausar();</span></div>
+<div class="line"><span class="ln">51</span><span class="lc">        }</span></div>
+<div class="line"><span class="ln">52</span><span class="lc">    }</span></div>
+<div class="line"><span class="ln">53</span><span class="lc"></span></div>
+<div class="line"><span class="ln">54</span><span class="lc">    private static void MostrarMenu()</span></div>
+<div class="line"><span class="ln">55</span><span class="lc">    {</span></div>
+<div class="line"><span class="ln">56</span><span class="lc">        if (!Console.IsOutputRedirected) Console.Clear();</span></div>
+<div class="line"><span class="ln">57</span><span class="lc">        Console.ForegroundColor = ConsoleColor.Cyan;</span></div>
+<div class="line"><span class="ln">58</span><span class="lc">        Console.WriteLine("===============================================");</span></div>
+<div class="line"><span class="ln">59</span><span class="lc">        Console.WriteLine("       SISTEMA DE PRESTAMOS DE BIBLIOTECA");</span></div>
+<div class="line"><span class="ln">60</span><span class="lc">        Console.WriteLine("===============================================");</span></div>
+<div class="line"><span class="ln">61</span><span class="lc">        Console.ResetColor();</span></div>
+<div class="line"><span class="ln">62</span><span class="lc">        Console.WriteLine("LECTORES: 1 Crear | 2 Listar | 3 Actualizar | 4 Eliminar");</span></div>
+<div class="line"><span class="ln">63</span><span class="lc">        Console.WriteLine("LIBROS:   5 Crear | 6 Listar | 7 Actualizar | 8 Eliminar");</span></div>
+<div class="line"><span class="ln">64</span><span class="lc">        Console.WriteLine("PRESTAMOS: 9 Crear | 10 Listar | 11 Actualizar | 12 Devolver | 13 Eliminar");</span></div>
+<div class="line"><span class="ln">65</span><span class="lc">        Console.WriteLine("POO: 14 Demostrar polimorfismo | 0 Salir");</span></div>
+<div class="line"><span class="ln">66</span><span class="lc">        Console.Write("Opcion: ");</span></div>
+<div class="line"><span class="ln">67</span><span class="lc">    }</span></div>
+<div class="line"><span class="ln">68</span><span class="lc"></span></div>
+<div class="line"><span class="ln">69</span><span class="lc">    private void CrearLector()</span></div>
+<div class="line"><span class="ln">70</span><span class="lc">    {</span></div>
+<div class="line"><span class="ln">71</span><span class="lc">        _repositorio.CrearLector(LeerLector());</span></div>
+<div class="line"><span class="ln">72</span><span class="lc">        Console.WriteLine("Lector creado correctamente.");</span></div>
+<div class="line"><span class="ln">73</span><span class="lc">    }</span></div>
+<div class="line"><span class="ln">74</span><span class="lc"></span></div>
+<div class="line"><span class="ln">75</span><span class="lc">    private void ListarLectores() =&gt; MostrarTabla(_repositorio.ObtenerLectores(), "LECTORES");</span></div>
+<div class="line"><span class="ln">76</span><span class="lc"></span></div>
+<div class="line"><span class="ln">77</span><span class="lc">    private void ActualizarLector()</span></div>
+<div class="line"><span class="ln">78</span><span class="lc">    {</span></div>
+<div class="line"><span class="ln">79</span><span class="lc">        _repositorio.ActualizarLector(LeerId("Id del lector a actualizar"), LeerLector());</span></div>
+<div class="line"><span class="ln">80</span><span class="lc">        Console.WriteLine("Lector actualizado correctamente (si el Id existe).");</span></div>
+<div class="line"><span class="ln">81</span><span class="lc">    }</span></div>
+<div class="line"><span class="ln">82</span><span class="lc"></span></div>
+<div class="line"><span class="ln">83</span><span class="lc">    private void EliminarLector()</span></div>
+<div class="line"><span class="ln">84</span><span class="lc">    {</span></div>
+<div class="line"><span class="ln">85</span><span class="lc">        _repositorio.EliminarLector(LeerId("Id del lector a eliminar"));</span></div>
+<div class="line"><span class="ln">86</span><span class="lc">        Console.WriteLine("Lector eliminado; sus prestamos tambien se eliminan.");</span></div>
+<div class="line"><span class="ln">87</span><span class="lc">    }</span></div>
+<div class="line"><span class="ln">88</span><span class="lc"></span></div>
+<div class="line"><span class="ln">89</span><span class="lc">    private void CrearLibro()</span></div>
+<div class="line"><span class="ln">90</span><span class="lc">    {</span></div>
+<div class="line"><span class="ln">91</span><span class="lc">        _repositorio.CrearLibro(LeerLibro());</span></div>
+<div class="line"><span class="ln">92</span><span class="lc">        Console.WriteLine("Libro creado correctamente.");</span></div>
+<div class="line"><span class="ln">93</span><span class="lc">    }</span></div>
+<div class="line"><span class="ln">94</span><span class="lc"></span></div>
+<div class="line"><span class="ln">95</span><span class="lc">    private void ListarLibros() =&gt; MostrarTabla(_repositorio.ObtenerLibros(), "LIBROS Y EJEMPLARES DISPONIBLES");</span></div>
+<div class="line"><span class="ln">96</span><span class="lc"></span></div>
+<div class="line"><span class="ln">97</span><span class="lc">    private void ActualizarLibro()</span></div>
+<div class="line"><span class="ln">98</span><span class="lc">    {</span></div>
+<div class="line"><span class="ln">99</span><span class="lc">        _repositorio.ActualizarLibro(LeerId("Id del libro a actualizar"), LeerLibro());</span></div>
+<div class="line"><span class="ln">100</span><span class="lc">        Console.WriteLine("Libro actualizado correctamente.");</span></div>
+<div class="line"><span class="ln">101</span><span class="lc">    }</span></div>
+<div class="line"><span class="ln">102</span><span class="lc"></span></div>
+<div class="line"><span class="ln">103</span><span class="lc">    private void EliminarLibro()</span></div>
+<div class="line"><span class="ln">104</span><span class="lc">    {</span></div>
+<div class="line"><span class="ln">105</span><span class="lc">        _repositorio.EliminarLibro(LeerId("Id del libro a eliminar"));</span></div>
+<div class="line"><span class="ln">106</span><span class="lc">        Console.WriteLine("Libro eliminado; sus prestamos tambien se eliminan.");</span></div>
+<div class="line"><span class="ln">107</span><span class="lc">    }</span></div>
+<div class="line"><span class="ln">108</span><span class="lc"></span></div>
+<div class="line"><span class="ln">109</span><span class="lc">    private void CrearPrestamo()</span></div>
+<div class="line"><span class="ln">110</span><span class="lc">    {</span></div>
+<div class="line"><span class="ln">111</span><span class="lc">        MostrarTabla(_repositorio.ObtenerLectores(), "LECTORES");</span></div>
+<div class="line"><span class="ln">112</span><span class="lc">        MostrarTabla(_repositorio.ObtenerLibros(), "LIBROS");</span></div>
+<div class="line"><span class="ln">113</span><span class="lc">        var inicio = DateTime.Today;</span></div>
+<div class="line"><span class="ln">114</span><span class="lc">        var limite = LeerFecha("Fecha limite (AAAA-MM-DD)");</span></div>
+<div class="line"><span class="ln">115</span><span class="lc">        var prestamo = new Prestamo(LeerId("Id del lector"), LeerId("Id del libro"), inicio, limite);</span></div>
+<div class="line"><span class="ln">116</span><span class="lc">        _repositorio.CrearPrestamo(prestamo);</span></div>
+<div class="line"><span class="ln">117</span><span class="lc">        Console.WriteLine("Prestamo registrado; el ejemplar queda ocupado hasta su devolucion.");</span></div>
+<div class="line"><span class="ln">118</span><span class="lc">    }</span></div>
+<div class="line"><span class="ln">119</span><span class="lc"></span></div>
+<div class="line"><span class="ln">120</span><span class="lc">    private void ListarPrestamos() =&gt; MostrarTabla(_repositorio.ObtenerPrestamos(), "PRESTAMOS Y ESTADO");</span></div>
+<div class="line"><span class="ln">121</span><span class="lc"></span></div>
+<div class="line"><span class="ln">122</span><span class="lc">    private void ActualizarPrestamo()</span></div>
+<div class="line"><span class="ln">123</span><span class="lc">    {</span></div>
+<div class="line"><span class="ln">124</span><span class="lc">        MostrarTabla(_repositorio.ObtenerLectores(), "LECTORES");</span></div>
+<div class="line"><span class="ln">125</span><span class="lc">        MostrarTabla(_repositorio.ObtenerLibros(), "LIBROS");</span></div>
+<div class="line"><span class="ln">126</span><span class="lc">        var id = LeerId("Id del prestamo a actualizar");</span></div>
+<div class="line"><span class="ln">127</span><span class="lc">        var lectorId = LeerId("Id del lector");</span></div>
+<div class="line"><span class="ln">128</span><span class="lc">        var libroId = LeerId("Id del libro");</span></div>
+<div class="line"><span class="ln">129</span><span class="lc">        var inicio = LeerFecha("Fecha de prestamo (AAAA-MM-DD)");</span></div>
+<div class="line"><span class="ln">130</span><span class="lc">        var limite = LeerFecha("Fecha limite (AAAA-MM-DD)");</span></div>
+<div class="line"><span class="ln">131</span><span class="lc">        _repositorio.ActualizarPrestamo(id, new Prestamo(lectorId, libroId, inicio, limite));</span></div>
+<div class="line"><span class="ln">132</span><span class="lc">        Console.WriteLine("Prestamo actualizado correctamente.");</span></div>
+<div class="line"><span class="ln">133</span><span class="lc">    }</span></div>
+<div class="line"><span class="ln">134</span><span class="lc"></span></div>
+<div class="line"><span class="ln">135</span><span class="lc">    private void RegistrarDevolucion()</span></div>
+<div class="line"><span class="ln">136</span><span class="lc">    {</span></div>
+<div class="line"><span class="ln">137</span><span class="lc">        _repositorio.RegistrarDevolucion(LeerId("Id del prestamo a devolver"), DateTime.Today);</span></div>
+<div class="line"><span class="ln">138</span><span class="lc">        Console.WriteLine("Devolucion registrada; el ejemplar vuelve a estar disponible.");</span></div>
+<div class="line"><span class="ln">139</span><span class="lc">    }</span></div>
+<div class="line"><span class="ln">140</span><span class="lc"></span></div>
+<div class="line"><span class="ln">141</span><span class="lc">    private void EliminarPrestamo()</span></div>
+<div class="line"><span class="ln">142</span><span class="lc">    {</span></div>
+<div class="line"><span class="ln">143</span><span class="lc">        _repositorio.EliminarPrestamo(LeerId("Id del prestamo a eliminar"));</span></div>
+<div class="line"><span class="ln">144</span><span class="lc">        Console.WriteLine("Prestamo eliminado.");</span></div>
+<div class="line"><span class="ln">145</span><span class="lc">    }</span></div>
+<div class="line"><span class="ln">146</span><span class="lc"></span></div>
+<div class="line"><span class="ln">147</span><span class="lc">    private static void DemostrarPolimorfismo()</span></div>
+<div class="line"><span class="ln">148</span><span class="lc">    {</span></div>
+<div class="line"><span class="ln">149</span><span class="lc">        Persona persona = new Lector("L-DEMO", "Ana Lopez", "ana@umg.edu.gt", "5555-0101");</span></div>
+<div class="line"><span class="ln">150</span><span class="lc">        Console.WriteLine("Referencia Persona que contiene una instancia de Lector:");</span></div>
+<div class="line"><span class="ln">151</span><span class="lc">        Console.WriteLine(persona.ObtenerInformacion());</span></div>
+<div class="line"><span class="ln">152</span><span class="lc">    }</span></div>
+<div class="line"><span class="ln">153</span><span class="lc"></span></div>
+<div class="line"><span class="ln">154</span><span class="lc">    private static Lector LeerLector() =&gt; new(</span></div>
+<div class="line"><span class="ln">155</span><span class="lc">        LeerTexto("Codigo"), LeerTexto("Nombre"), LeerTexto("Correo"), LeerTexto("Telefono"));</span></div>
+<div class="line"><span class="ln">156</span><span class="lc"></span></div>
+<div class="line"><span class="ln">157</span><span class="lc">    private static Libro LeerLibro() =&gt; new(</span></div>
+<div class="line"><span class="ln">158</span><span class="lc">        LeerTexto("Codigo"), LeerTexto("Titulo"), LeerTexto("Autor"), LeerEntero("Cantidad de ejemplares"));</span></div>
+<div class="line"><span class="ln">159</span><span class="lc"></span></div>
+<div class="line"><span class="ln">160</span><span class="lc">    private static int LeerId(string mensaje) =&gt; LeerEntero(mensaje);</span></div>
+<div class="line"><span class="ln">161</span><span class="lc"></span></div>
+<div class="line"><span class="ln">162</span><span class="lc">    private static int LeerEntero(string mensaje)</span></div>
+<div class="line"><span class="ln">163</span><span class="lc">    {</span></div>
+<div class="line"><span class="ln">164</span><span class="lc">        Console.Write($"{mensaje}: ");</span></div>
+<div class="line"><span class="ln">165</span><span class="lc">        if (!int.TryParse(Console.ReadLine(), out var valor)) throw new ArgumentException("Ingrese un numero entero valido.");</span></div>
+<div class="line"><span class="ln">166</span><span class="lc">        return valor;</span></div>
+<div class="line"><span class="ln">167</span><span class="lc">    }</span></div>
+<div class="line"><span class="ln">168</span><span class="lc"></span></div>
+<div class="line"><span class="ln">169</span><span class="lc">    private static DateTime LeerFecha(string mensaje)</span></div>
+<div class="line"><span class="ln">170</span><span class="lc">    {</span></div>
+<div class="line"><span class="ln">171</span><span class="lc">        Console.Write($"{mensaje}: ");</span></div>
+<div class="line"><span class="ln">172</span><span class="lc">        if (!DateTime.TryParse(Console.ReadLine(), out var fecha)) throw new ArgumentException("Ingrese una fecha valida.");</span></div>
+<div class="line"><span class="ln">173</span><span class="lc">        return fecha.Date;</span></div>
+<div class="line"><span class="ln">174</span><span class="lc">    }</span></div>
+<div class="line"><span class="ln">175</span><span class="lc"></span></div>
+<div class="line"><span class="ln">176</span><span class="lc">    private static string LeerTexto(string mensaje)</span></div>
+<div class="line"><span class="ln">177</span><span class="lc">    {</span></div>
+<div class="line"><span class="ln">178</span><span class="lc">        Console.Write($"{mensaje}: ");</span></div>
+<div class="line"><span class="ln">179</span><span class="lc">        var texto = Console.ReadLine();</span></div>
+<div class="line"><span class="ln">180</span><span class="lc">        return string.IsNullOrWhiteSpace(texto)</span></div>
+<div class="line"><span class="ln">181</span><span class="lc">            ? throw new ArgumentException($"El campo '{mensaje}' es obligatorio.")</span></div>
+<div class="line"><span class="ln">182</span><span class="lc">            : texto.Trim();</span></div>
+<div class="line"><span class="ln">183</span><span class="lc">    }</span></div>
+<div class="line"><span class="ln">184</span><span class="lc"></span></div>
+<div class="line"><span class="ln">185</span><span class="lc">    private static void MostrarTabla(DataTable tabla, string titulo)</span></div>
+<div class="line"><span class="ln">186</span><span class="lc">    {</span></div>
+<div class="line"><span class="ln">187</span><span class="lc">        Console.WriteLine($"\n=== {titulo} ===");</span></div>
+<div class="line"><span class="ln">188</span><span class="lc">        if (tabla.Rows.Count == 0)</span></div>
+<div class="line"><span class="ln">189</span><span class="lc">        {</span></div>
+<div class="line"><span class="ln">190</span><span class="lc">            Console.WriteLine("No hay registros.");</span></div>
+<div class="line"><span class="ln">191</span><span class="lc">            return;</span></div>
+<div class="line"><span class="ln">192</span><span class="lc">        }</span></div>
+<div class="line"><span class="ln">193</span><span class="lc"></span></div>
+<div class="line"><span class="ln">194</span><span class="lc">        foreach (DataColumn columna in tabla.Columns) Console.Write($"{columna.ColumnName,-22}");</span></div>
+<div class="line"><span class="ln">195</span><span class="lc">        Console.WriteLine();</span></div>
+<div class="line"><span class="ln">196</span><span class="lc">        foreach (DataRow fila in tabla.Rows)</span></div>
+<div class="line"><span class="ln">197</span><span class="lc">        {</span></div>
+<div class="line"><span class="ln">198</span><span class="lc">            foreach (var valor in fila.ItemArray) Console.Write($"{valor,-22}");</span></div>
+<div class="line"><span class="ln">199</span><span class="lc">            Console.WriteLine();</span></div>
+<div class="line"><span class="ln">200</span><span class="lc">        }</span></div>
+<div class="line"><span class="ln">201</span><span class="lc">    }</span></div>
+<div class="line"><span class="ln">202</span><span class="lc"></span></div>
+<div class="line"><span class="ln">203</span><span class="lc">    private static void Pausar()</span></div>
+<div class="line"><span class="ln">204</span><span class="lc">    {</span></div>
+<div class="line"><span class="ln">205</span><span class="lc">        if (Console.IsInputRedirected) return;</span></div>
+<div class="line"><span class="ln">206</span><span class="lc">        Console.WriteLine("\nPresione Enter para continuar...");</span></div>
+<div class="line"><span class="ln">207</span><span class="lc">        Console.ReadLine();</span></div>
+<div class="line"><span class="ln">208</span><span class="lc">    }</span></div>
+<div class="line"><span class="ln">209</span><span class="lc">}</span></div></div>
+</section>
+<section class="file" id="archivo-10">
+  <div class="file-head">
+    <span class="file-num">Archivo 10 de 11</span>
+    <h3>BaseDatos/crear_tablas.sql</h3>
+    <span class="file-layer">Base de datos</span>
+  </div>
+  <p class="file-desc">Script SQL con las tablas Lectores, Libros y Prestamos, claves foraneas, restricciones CHECK e indices.</p>
+  <div class="code"><div class="line"><span class="ln">1</span><span class="lc">PRAGMA foreign_keys = ON;</span></div>
+<div class="line"><span class="ln">2</span><span class="lc"></span></div>
+<div class="line"><span class="ln">3</span><span class="lc">CREATE TABLE IF NOT EXISTS Lectores (</span></div>
+<div class="line"><span class="ln">4</span><span class="lc">    Id INTEGER PRIMARY KEY AUTOINCREMENT,</span></div>
+<div class="line"><span class="ln">5</span><span class="lc">    Codigo TEXT NOT NULL UNIQUE,</span></div>
+<div class="line"><span class="ln">6</span><span class="lc">    Nombre TEXT NOT NULL,</span></div>
+<div class="line"><span class="ln">7</span><span class="lc">    Correo TEXT NOT NULL UNIQUE,</span></div>
+<div class="line"><span class="ln">8</span><span class="lc">    Telefono TEXT NOT NULL</span></div>
+<div class="line"><span class="ln">9</span><span class="lc">);</span></div>
+<div class="line"><span class="ln">10</span><span class="lc"></span></div>
+<div class="line"><span class="ln">11</span><span class="lc">CREATE TABLE IF NOT EXISTS Libros (</span></div>
+<div class="line"><span class="ln">12</span><span class="lc">    Id INTEGER PRIMARY KEY AUTOINCREMENT,</span></div>
+<div class="line"><span class="ln">13</span><span class="lc">    Codigo TEXT NOT NULL UNIQUE,</span></div>
+<div class="line"><span class="ln">14</span><span class="lc">    Titulo TEXT NOT NULL,</span></div>
+<div class="line"><span class="ln">15</span><span class="lc">    Autor TEXT NOT NULL,</span></div>
+<div class="line"><span class="ln">16</span><span class="lc">    Ejemplares INTEGER NOT NULL CHECK (Ejemplares &gt;= 0)</span></div>
+<div class="line"><span class="ln">17</span><span class="lc">);</span></div>
+<div class="line"><span class="ln">18</span><span class="lc"></span></div>
+<div class="line"><span class="ln">19</span><span class="lc">CREATE TABLE IF NOT EXISTS Prestamos (</span></div>
+<div class="line"><span class="ln">20</span><span class="lc">    Id INTEGER PRIMARY KEY AUTOINCREMENT,</span></div>
+<div class="line"><span class="ln">21</span><span class="lc">    LectorId INTEGER NOT NULL,</span></div>
+<div class="line"><span class="ln">22</span><span class="lc">    LibroId INTEGER NOT NULL,</span></div>
+<div class="line"><span class="ln">23</span><span class="lc">    FechaPrestamo TEXT NOT NULL,</span></div>
+<div class="line"><span class="ln">24</span><span class="lc">    FechaLimite TEXT NOT NULL,</span></div>
+<div class="line"><span class="ln">25</span><span class="lc">    FechaDevolucion TEXT NULL,</span></div>
+<div class="line"><span class="ln">26</span><span class="lc">    CHECK (date(FechaLimite) &gt;= date(FechaPrestamo)),</span></div>
+<div class="line"><span class="ln">27</span><span class="lc">    CHECK (FechaDevolucion IS NULL OR date(FechaDevolucion) &gt;= date(FechaPrestamo)),</span></div>
+<div class="line"><span class="ln">28</span><span class="lc">    FOREIGN KEY (LectorId) REFERENCES Lectores(Id) ON DELETE CASCADE,</span></div>
+<div class="line"><span class="ln">29</span><span class="lc">    FOREIGN KEY (LibroId) REFERENCES Libros(Id) ON DELETE CASCADE</span></div>
+<div class="line"><span class="ln">30</span><span class="lc">);</span></div>
+<div class="line"><span class="ln">31</span><span class="lc"></span></div>
+<div class="line"><span class="ln">32</span><span class="lc">CREATE INDEX IF NOT EXISTS IX_Prestamos_LectorId ON Prestamos(LectorId);</span></div>
+<div class="line"><span class="ln">33</span><span class="lc">CREATE INDEX IF NOT EXISTS IX_Prestamos_LibroId_Estado ON Prestamos(LibroId, FechaDevolucion);</span></div></div>
+</section>
+<section class="file" id="archivo-11">
+  <div class="file-head">
+    <span class="file-num">Archivo 11 de 11</span>
+    <h3>README.md</h3>
+    <span class="file-layer">Documentacion</span>
+  </div>
+  <p class="file-desc">Instrucciones de instalacion, ejecucion, descripcion de tablas, reglas de negocio y recorrido sugerido para clase.</p>
+  <div class="code"><div class="line"><span class="ln">1</span><span class="lc"># Sistema de Prestamos de Biblioteca</span></div>
+<div class="line"><span class="ln">2</span><span class="lc"></span></div>
+<div class="line"><span class="ln">3</span><span class="lc">Ejemplo didactico de consola en C# para registrar lectores, libros y prestamos en SQLite. Recorre el flujo desde las tablas y sus relaciones hasta las operaciones CRUD, las reglas de disponibilidad y la devolucion de ejemplares.</span></div>
+<div class="line"><span class="ln">4</span><span class="lc"></span></div>
+<div class="line"><span class="ln">5</span><span class="lc">## Requisitos y ejecucion</span></div>
+<div class="line"><span class="ln">6</span><span class="lc"></span></div>
+<div class="line"><span class="ln">7</span><span class="lc">- .NET 6 SDK o posterior.</span></div>
+<div class="line"><span class="ln">8</span><span class="lc">- Conexion a Internet al restaurar por primera vez el paquete NuGet.</span></div>
+<div class="line"><span class="ln">9</span><span class="lc"></span></div>
+<div class="line"><span class="ln">10</span><span class="lc">Desde esta carpeta:</span></div>
+<div class="line"><span class="ln">11</span><span class="lc"></span></div>
+<div class="line"><span class="ln">12</span><span class="lc">```powershell</span></div>
+<div class="line"><span class="ln">13</span><span class="lc">dotnet restore</span></div>
+<div class="line"><span class="ln">14</span><span class="lc">dotnet run</span></div>
+<div class="line"><span class="ln">15</span><span class="lc">```</span></div>
+<div class="line"><span class="ln">16</span><span class="lc"></span></div>
+<div class="line"><span class="ln">17</span><span class="lc">`Microsoft.Data.Sqlite` esta declarado en `PrestamosBiblioteca.csproj`; NuGet descarga automaticamente el proveedor y las bibliotecas necesarias. No se deben copiar DLLs manualmente. Al iniciar, el programa crea la base de datos y sus tablas si no existen.</span></div>
+<div class="line"><span class="ln">18</span><span class="lc"></span></div>
+<div class="line"><span class="ln">19</span><span class="lc">La base se crea en `%LOCALAPPDATA%\UMG\PrestamosBiblioteca\biblioteca.db`. Para pruebas, puede establecerse la variable de entorno `PRESTAMOS_BIBLIOTECA_DB` con otra ruta completa. Para reiniciar el ejemplo, cierre el programa y elimine el archivo `.db` correspondiente.</span></div>
+<div class="line"><span class="ln">20</span><span class="lc"></span></div>
+<div class="line"><span class="ln">21</span><span class="lc">## Tablas y relaciones</span></div>
+<div class="line"><span class="ln">22</span><span class="lc"></span></div>
+<div class="line"><span class="ln">23</span><span class="lc">- `Lectores`: personas que pueden solicitar libros.</span></div>
+<div class="line"><span class="ln">24</span><span class="lc">- `Libros`: catalogo con cantidad total de ejemplares.</span></div>
+<div class="line"><span class="ln">25</span><span class="lc">- `Prestamos`: relacion de un lector con un libro, fechas del prestamo y eventual devolucion.</span></div>
+<div class="line"><span class="ln">26</span><span class="lc">- Las claves foraneas relacionan prestamos con lectores y libros.</span></div>
+<div class="line"><span class="ln">27</span><span class="lc">- Los ejemplares disponibles se calculan restando los prestamos activos del total.</span></div>
+<div class="line"><span class="ln">28</span><span class="lc"></span></div>
+<div class="line"><span class="ln">29</span><span class="lc">Revise el esquema completo en `BaseDatos/crear_tablas.sql`.</span></div>
+<div class="line"><span class="ln">30</span><span class="lc"></span></div>
+<div class="line"><span class="ln">31</span><span class="lc">## CRUD y reglas</span></div>
+<div class="line"><span class="ln">32</span><span class="lc"></span></div>
+<div class="line"><span class="ln">33</span><span class="lc">El menu permite crear, listar, actualizar y eliminar lectores, libros y prestamos, ademas de registrar devoluciones. No se permite prestar cuando no hay ejemplares disponibles. Un ejemplar vuelve a estar disponible al registrar su devolucion. El listado informa si cada prestamo esta `Prestado`, `Vencido` o `Devuelto`.</span></div>
+<div class="line"><span class="ln">34</span><span class="lc"></span></div>
+<div class="line"><span class="ln">35</span><span class="lc">Las consultas estan separadas en `Persistencia/RepositorioBiblioteca.cs` y usan parametros SQL. El menu interactivo esta en `Aplicacion/MenuBiblioteca.cs`.</span></div>
+<div class="line"><span class="ln">36</span><span class="lc"></span></div>
+<div class="line"><span class="ln">37</span><span class="lc">## POO y manejo de errores</span></div>
+<div class="line"><span class="ln">38</span><span class="lc"></span></div>
+<div class="line"><span class="ln">39</span><span class="lc">- `Persona` es abstracta y `Lector` hereda de ella.</span></div>
+<div class="line"><span class="ln">40</span><span class="lc">- `Persona persona = new Lector(...)` y la opcion 14 muestran polimorfismo.</span></div>
+<div class="line"><span class="ln">41</span><span class="lc">- `Libro` y `Prestamo` encapsulan sus datos y validan reglas de negocio.</span></div>
+<div class="line"><span class="ln">42</span><span class="lc">- La capa de persistencia separa las entidades de la base de datos.</span></div>
+<div class="line"><span class="ln">43</span><span class="lc">- `try-catch` en el menu controla datos incorrectos, restricciones SQLite y reglas del sistema sin cerrar la aplicacion.</span></div>
+<div class="line"><span class="ln">44</span><span class="lc"></span></div>
+<div class="line"><span class="ln">45</span><span class="lc">## Recorrido sugerido para clase</span></div>
+<div class="line"><span class="ln">46</span><span class="lc"></span></div>
+<div class="line"><span class="ln">47</span><span class="lc">1. Leer `BaseDatos/crear_tablas.sql` y ubicar las claves foraneas.</span></div>
+<div class="line"><span class="ln">48</span><span class="lc">2. Crear un lector y un libro con un ejemplar.</span></div>
+<div class="line"><span class="ln">49</span><span class="lc">3. Crear un prestamo y consultar el listado: los ejemplares disponibles deben pasar a cero.</span></div>
+<div class="line"><span class="ln">50</span><span class="lc">4. Intentar otro prestamo del mismo libro y observar el error controlado.</span></div>
+<div class="line"><span class="ln">51</span><span class="lc">5. Registrar la devolucion y consultar nuevamente la disponibilidad.</span></div>
+<div class="line"><span class="ln">52</span><span class="lc">6. Probar actualizar/eliminar datos y la opcion 14 para observar polimorfismo.</span></div></div>
+</section>
+
+
+<section>
+  <h2>9. Conclusiones</h2>
+  <p>El Sistema de Prestamos de Biblioteca cubre el circuito completo de una base de datos aplicada a un caso de uso real: desde el diseno del esquema relacional hasta la ejecucion de operaciones CRUD y reglas de negocio con manejo de errores. La separacion por capas, el uso de consultas parametrizadas y las transacciones constituyen buenas practicas que el estudiante puede reutilizar en proyectos posteriores.</p>
+</section>
+
+</div>
+</body>
+</html>

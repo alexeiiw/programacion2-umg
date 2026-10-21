@@ -22,7 +22,7 @@ desktop.ini
 *.tmp
 *.log
 
-# Formatos locales de examenes y material de apoyo no versionado
+# Material de examenes: NUNCA se publica, solo uso local del docente
 DocumentacionExamenes/
 /P2 - Semana *.pdf
 Programacion 1 B- Segundo parcial ordinario*.pdf

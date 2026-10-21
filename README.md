@@ -1,6 +1,6 @@
 # Programacion 2 UMG Portales
 
-Ultima actualizacion: 16 de septiembre de 2026
+Ultima actualizacion: 21 de octubre de 2026
 
 Bienvenidos al repositorio de apoyo para el curso de Programacion 2 de la Universidad Mariano Galvez, sede Portales.
 
@@ -32,6 +32,7 @@ HolaMundoBlueJ/        -> Proyecto introductorio de POO y herencia (Animal -> Pe
 SistemaAlumnos/        -> Sistema de ingreso y consulta de notas (BlueJ y C#)
 SistemaVeterinario/    -> Sistema de control veterinario (BlueJ y C#)
 GestionAcademica/      -> CRUD academico en C# con SQLite
+PrestamosBiblioteca/   -> Sistema de prestamos de biblioteca en C# con SQLite
 TicketsSoporte/        -> Automatizacion de tickets de soporte (BlueJ y C#)
 TareasResueltas/       -> Soluciones de tareas y ejercicios de apoyo
 ```
@@ -127,6 +128,22 @@ dotnet run
 ```
 
 El proveedor SQLite se restaura desde NuGet y la base de datos local se inicializa al ejecutar el programa. Consulte `GestionAcademica/README.md` para pasos y estructura detallados.
+
+---
+
+## Ejemplo PrestamosBiblioteca
+
+Aplicacion de consola en C# para practicar el ciclo completo de una base de datos con SQLite: registro de lectores y libros, control de disponibilidad de ejemplares y flujo de prestamo/devolucion. Incluye POO (abstraccion, herencia, polimorfismo y encapsulamiento), esquema SQL con relaciones y `try-catch`.
+
+Para probar:
+
+```powershell
+cd PrestamosBiblioteca
+dotnet restore
+dotnet run
+```
+
+Consulte `PrestamosBiblioteca/README.md` para pasos y estructura detallados.
 
 ---
 
