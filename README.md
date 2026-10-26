@@ -1,6 +1,6 @@
 # Programacion 2 UMG Portales
 
-Ultima actualizacion: 21 de octubre de 2026
+Ultima actualizacion: 26 de octubre de 2026
 
 Bienvenidos al repositorio de apoyo para el curso de Programacion 2 de la Universidad Mariano Galvez, sede Portales.
 
@@ -31,8 +31,10 @@ CarritodeCompras/      -> Modulo integral E-Commerce (Casos de uso, flujo, BlueJ
 HolaMundoBlueJ/        -> Proyecto introductorio de POO y herencia (Animal -> Perro)
 SistemaAlumnos/        -> Sistema de ingreso y consulta de notas (BlueJ y C#)
 SistemaVeterinario/    -> Sistema de control veterinario (BlueJ y C#)
+SistemaVeterinarioV2/  -> Control veterinario en C# con WinForms y SQLite
 GestionAcademica/      -> CRUD academico en C# con SQLite
 PrestamosBiblioteca/   -> Sistema de prestamos de biblioteca en C# con SQLite
+ArriendoVehiculos/     -> Arriendo de vehiculos en C# con SQLite
 TicketsSoporte/        -> Automatizacion de tickets de soporte (BlueJ y C#)
 TareasResueltas/       -> Soluciones de tareas y ejercicios de apoyo
 ```
@@ -115,6 +117,24 @@ dotnet run
 
 ---
 
+## Modulo SistemaVeterinarioV2
+
+Evolucion del sistema veterinario del Proyecto 1: aplicacion de escritorio en C# con Windows Forms y SQLite. Conserva el registro de mascotas y consultas, las validaciones clinicas y la regla de estado, y agrega CRUD completo desde formularios.
+
+Incluye abstraccion, herencia, polimorfismo, encapsulamiento y `try-catch`, con el esquema SQL en `BaseDatos/crear_tablas.sql`.
+
+Para probar:
+
+```powershell
+cd SistemaVeterinarioV2
+dotnet restore
+dotnet run
+```
+
+La base se crea en `%LOCALAPPDATA%\UMG\SistemaVeterinarioV2\veterinaria.db`. Consulte `SistemaVeterinarioV2/README.md` para detalles.
+
+---
+
 ## Ejemplo GestionAcademica
 
 Aplicacion de consola en C# para explorar CRUD de estudiantes, cursos e inscripciones con SQLite. Incluye esquema SQL, relaciones entre tablas, validaciones, POO y manejo de errores con `try-catch`.
@@ -144,6 +164,22 @@ dotnet run
 ```
 
 Consulte `PrestamosBiblioteca/README.md` para pasos y estructura detallados.
+
+---
+
+## Ejemplo ArriendoVehiculos
+
+Solucion de referencia del Pre Test Final: aplicacion de consola en C# para administrar el arriendo de vehiculos con SQLite. Cubre la creacion de tablas, la clase de inicializacion de la base de datos, el CRUD de clientes y vehiculos, y el flujo de arriendos con validacion de solapamiento y calculo del total al devolver.
+
+Para probar:
+
+```powershell
+cd ArriendoVehiculos
+dotnet restore
+dotnet run
+```
+
+La base se crea en `%LOCALAPPDATA%\UMG\ArriendoVehiculos\arriendos.db`. Consulte `ArriendoVehiculos/README.md` para pasos y estructura detallados.
 
 ---
 
